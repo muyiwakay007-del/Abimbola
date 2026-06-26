@@ -1,0 +1,50 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-body);
+  --font-script: var(--font-script);
+}
+
+body {
+  font-family: var(--font-body), Arial, Helvetica, sans-serif;
+}
+
+.font-script {
+  font-family: var(--font-script), cursive;
+}
+
+/* Styling for rendered post HTML coming from WordPress */
+.post-body {
+  line-height: 1.75;
+}
+.post-body p {
+  margin-bottom: 1.25rem;
+}
+.post-body h2,
+.post-body h3 {
+  font-weight: 700;
+  margin: 1.75rem 0 0.75rem;
+  color: #0f766e;
+}
+.post-body a {
+  color: #0d9488;
+  text-decoration: underline;
+}
+.post-body img {
+  border-radius: 0.5rem;
+  margin: 1.5rem 0;
+  max-width: 100%;
+  height: auto;
+}
+.post-body blockquote {
+  border-left: 4px solid #5eead4;
+  padding-left: 1rem;
+  font-style: italic;
+  color: #475569;
+  margin: 1.25rem 0;
+}
+.post-body ul,
+.post-body ol {
+  margin: 0 0 1.25rem 1.5rem;
+  list-style: revert;
+}
