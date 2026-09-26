@@ -1,0 +1,36 @@
+.filters { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-2); margin-bottom: var(--space-7); }
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 0.55rem 1.1rem;
+  font: inherit;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  background: var(--surface-card);
+  border: 1.5px solid var(--border-subtle);
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: all var(--dur-fast) var(--ease-soft);
+}
+.chip:hover { border-color: var(--brand); color: var(--brand-strong); }
+.chip[aria-pressed="true"] { color: #fff; background: var(--brand); border-color: var(--brand); }
+.count {
+  min-width: 1.6em;
+  padding: 1px 6px;
+  font-size: var(--text-xs);
+  border-radius: var(--radius-pill);
+  background: var(--gray-100);
+  color: var(--text-muted);
+}
+.chip[aria-pressed="true"] .count { background: rgba(255, 255, 255, 0.2); color: #fff; }
+
+.grid {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+}
+.grid > div { display: flex; }
+.grid > div > * { flex: 1; }

@@ -1,0 +1,71 @@
+.section { background: var(--surface-lavender); }
+
+.grid {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  margin-bottom: var(--space-7);
+}
+
+.card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-3);
+  margin: 0;
+  padding: var(--space-6);
+  background: var(--surface-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+}
+.sample { border-style: dashed; border-color: #e0b44c; }
+.sampleTag {
+  position: absolute;
+  top: 12px;
+  right: 12px;
+  font: 600 11px/1 ui-monospace, SFMono-Regular, Menlo, monospace;
+  color: #7a4b00;
+  background: #fff6dd;
+  padding: 4px 8px;
+  border-radius: 6px;
+}
+.quoteMark { color: var(--mauve-400); }
+.quote { margin: 0; flex: 1; font-family: var(--font-serif); font-size: 1.1rem; line-height: 1.6; color: var(--text-heading); }
+.quote p { margin: 0; }
+.person { display: flex; align-items: center; gap: var(--space-3); }
+.avatar {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  object-fit: cover;
+  font-family: var(--font-serif);
+  font-weight: 700;
+  color: #fff;
+  background: var(--gradient-brand);
+}
+.name { display: block; font-weight: 700; color: var(--text-heading); }
+.role { display: block; font-size: var(--text-sm); color: var(--text-muted); }
+
+.invite {
+  display: grid;
+  gap: var(--space-4);
+  align-items: center;
+  max-width: 900px;
+  margin-inline: auto;
+  padding: var(--space-6);
+  color: var(--accent);
+  background: var(--surface-card);
+  border: 1px solid var(--border-card);
+  border-radius: var(--radius-xl);
+  box-shadow: var(--shadow-sm);
+}
+@media (min-width: 760px) {
+  .invite { grid-template-columns: auto 1fr auto; padding: var(--space-6) var(--space-7); }
+}
+.inviteTitle { font-size: var(--text-h4); margin: 0 0 var(--space-1); }
+.inviteText { margin: 0; color: var(--text-body); font-size: 0.975rem; }

@@ -1,0 +1,120 @@
+/* ---------- Shared field styles ---------- */
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.label { font-size: var(--text-sm); font-weight: 700; color: var(--text-heading); }
+.labelLight { font-size: var(--text-sm); font-weight: 700; color: #fff; }
+
+.input,
+.inputLight {
+  width: 100%;
+  padding: 0.85rem 1rem;
+  font: inherit;
+  font-size: 1rem;
+  border-radius: var(--radius-md);
+  transition: border-color var(--dur-fast) var(--ease-soft), box-shadow var(--dur-fast) var(--ease-soft);
+}
+.input {
+  color: var(--text-heading);
+  background: #fff;
+  border: 1.5px solid transparent;
+}
+.inputLight {
+  color: var(--text-heading);
+  background: #fff;
+  border: 1.5px solid var(--gray-300);
+}
+.input:focus,
+.inputLight:focus { outline: none; border-color: var(--plum-500); box-shadow: 0 0 0 4px rgba(176, 92, 165, 0.25); }
+.input[aria-invalid="true"],
+.inputLight[aria-invalid="true"] { border-color: #c2410c; }
+textarea.inputLight { resize: vertical; min-height: 140px; }
+
+.error { font-size: var(--text-sm); color: #b42318; }
+.errorLight { font-size: var(--text-sm); color: #ffd7d0; font-weight: 700; }
+
+.hp { position: absolute; left: -10000px; width: 1px; height: 1px; overflow: hidden; }
+
+.submit,
+.submitLight {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.95rem 1.8rem;
+  font: inherit;
+  font-weight: 700;
+  border: 0;
+  border-radius: var(--radius-pill);
+  cursor: pointer;
+  transition: background-color var(--dur-fast) var(--ease-soft), transform var(--dur-fast) var(--ease-soft);
+}
+.submit { color: #fff; background: var(--brand); box-shadow: var(--shadow-brand); justify-self: start; }
+.submit:hover { background: var(--brand-strong); transform: translateY(-1px); }
+.submitLight { color: var(--brand-deep); background: #fff; }
+.submitLight:hover { background: var(--teal-50); transform: translateY(-1px); }
+.submit:disabled,
+.submitLight:disabled { opacity: 0.65; cursor: progress; transform: none; }
+.submitLight:focus-visible { outline-color: #fff; }
+
+.status { margin: 0; min-height: 1.5em; font-size: var(--text-sm); color: #b42318; }
+.statusLight { margin: 0; min-height: 1.5em; font-size: var(--text-sm); color: #fff; font-weight: 700; }
+.fine { margin: 0; font-size: var(--text-xs); color: rgba(255, 255, 255, 0.75); }
+
+/* ---------- Newsletter band ---------- */
+.newsletter {
+  position: relative;
+  overflow: hidden;
+  padding-block: var(--section-y);
+  color: #fff;
+  background:
+    radial-gradient(60% 100% at 100% 0%, rgba(233, 168, 201, 0.35), transparent 60%),
+    radial-gradient(50% 90% at 0% 100%, rgba(5, 150, 105, 0.3), transparent 60%),
+    var(--gradient-brand);
+}
+.newsletterInner { display: grid; gap: var(--space-7); align-items: center; }
+@media (min-width: 900px) {
+  .newsletterInner { grid-template-columns: 1fr 1.1fr; gap: var(--space-9); }
+}
+.newsletterTitle { font-size: var(--text-display); color: #fff; margin: var(--space-3) 0 var(--space-4); }
+.newsletterText { font-size: var(--text-lead); line-height: var(--lh-snug); color: rgba(255, 255, 255, 0.9); margin: 0; max-width: 40ch; }
+
+.newsletterForm {
+  display: grid;
+  gap: var(--space-4);
+  padding: var(--space-6);
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: var(--radius-xl);
+  backdrop-filter: blur(8px);
+}
+@media (min-width: 560px) {
+  .newsletterForm { grid-template-columns: 1fr 1fr; }
+  .newsletterForm .submitLight,
+  .newsletterForm .fine,
+  .newsletterForm .statusLight { grid-column: 1 / -1; }
+}
+
+.success {
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-2);
+  padding: var(--space-6);
+  font-size: 1.05rem;
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  border-radius: var(--radius-xl);
+}
+.success strong { font-family: var(--font-serif); font-size: var(--text-h3); }
+
+/* ---------- Contact form ---------- */
+.contactForm { display: grid; gap: var(--space-5); }
+.row { display: grid; gap: var(--space-5); }
+@media (min-width: 640px) {
+  .row { grid-template-columns: 1fr 1fr; }
+}
+.successCard {
+  padding: var(--space-7);
+  text-align: center;
+  background: var(--surface-soft);
+  border: 1px solid var(--teal-100);
+  border-radius: var(--radius-xl);
+}
+.successTitle { font-size: var(--text-h3); }

@@ -1,27 +1,54 @@
 import { getPostsByCategory } from "@/lib/posts";
-import PostCard from "@/components/PostCard";
+import { pageMetadata, breadcrumbSchema } from "@/lib/seo";
+import { JsonLd } from "@/components/JsonLd";
+import { PageHeader } from "@/components/PageHeader";
+import { Testimonials } from "@/components/Testimonials";
+import { SectionHeading } from "@/components/SectionHeading";
+import { BlogCard } from "@/components/BlogCard";
+import { BookCta } from "@/components/BookCta";
+import blogStyles from "@/components/BlogCard.module.css";
 
-export const metadata = { title: "Book Reviews — Abimbola Olumuyiwa" };
+export const revalidate = 3600;
+
+export const metadata = pageMetadata({
+  title: "Book Reviews & Testimonials",
+  description:
+    "Reader testimonials for Kiddies Daily Devotional, plus Abimbola Olumuyiwa's reviews of the Christian and personal-growth books that have shaped her.",
+  path: "/book-reviews",
+});
 
 export default async function BookReviewsPage() {
-  const posts = await getPostsByCategory("book-review");
-
+  const reviews = await getPostsByCategory("book-review");
   return (
-    <div className="mx-auto max-w-5xl px-6 py-12">
-      <h2 className="text-3xl font-bold text-teal-700">Book Reviews</h2>
-      <p className="mt-2 text-gray-600">The books shaping the journey.</p>
+    <>
+      <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Book Reviews", path: "/book-reviews" }])} />
+      <PageHeader
+        eyebrow="Reviews"
+        title="Book Reviews & Testimonials"
+        intro="What readers are saying about Kiddies Daily Devotional, and my own honest reflections on the books I've been reading."
+      />
 
-      {posts.length === 0 ? (
-        <p className="mt-8 rounded-md bg-amber-50 p-4 text-sm text-amber-800">
-          No reviews yet — run the WordPress import once your Supabase keys are set.
-        </p>
-      ) : (
-        <div className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-          {posts.map((post) => (
-            <PostCard key={post.id} post={post} />
-          ))}
-        </div>
+      <Testimonials id="reader-testimonials" title="Kiddies Daily Devotional: reader testimonials" />
+
+      {reviews.length > 0 && (
+        <section className="section" aria-labelledby="my-reviews">
+          <div className="container">
+            <SectionHeading
+              id="my-reviews"
+              eyebrow="From my bookshelf"
+              title="Books I've reviewed"
+              intro="Books that met me where I was: on prayer, faith, purpose and becoming."
+            />
+            <div className={blogStyles.grid}>
+              {reviews.map((p, i) => (
+                <BlogCard key={p.slug} post={p} index={i} />
+              ))}
+            </div>
+          </div>
+        </section>
       )}
-    </div>
+
+      <BookCta />
+    </>
   );
 }

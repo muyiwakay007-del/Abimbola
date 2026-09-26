@@ -7,7 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "import:wp": "node scripts/import-wordpress.mjs"
+    "import:wp": "node scripts/import-wordpress.mjs",
+    "snapshot:wp": "node scripts/snapshot-wordpress.mjs"
   },
   "dependencies": {
     "@supabase/ssr": "^0.12.0",

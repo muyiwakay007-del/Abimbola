@@ -1,0 +1,36 @@
+/* Why Kiddies Daily Devotional */
+.why { display: grid; gap: var(--space-8); align-items: center; }
+@media (min-width: 1000px) {
+  .why { grid-template-columns: 1fr 1.1fr; gap: var(--space-9); }
+}
+.whyTitle { font-size: var(--text-h1); margin: var(--space-3) 0 var(--space-6); }
+.storyQuote {
+  position: relative;
+  margin: 0;
+  padding: var(--space-6) var(--space-6) var(--space-5);
+  font-family: var(--font-serif);
+  font-size: clamp(1.1rem, 1rem + 0.4vw, 1.3rem);
+  font-style: italic;
+  line-height: 1.7;
+  color: var(--text-heading);
+  background: var(--surface-reading);
+  border-radius: var(--radius-xl);
+  border-left: 4px solid var(--accent-soft);
+}
+.storyQuote p { margin-bottom: var(--space-4); }
+.signature { font-family: var(--font-script); font-style: normal; font-size: 1.9rem; color: var(--accent); }
+
+/* Collection */
+.collection { background: var(--surface-soft); }
+
+/* What's inside */
+.inside {
+  background:
+    radial-gradient(60% 80% at 100% 0%, rgba(142, 69, 133, 0.4), transparent 60%),
+    radial-gradient(60% 80% at 0% 100%, rgba(5, 150, 105, 0.3), transparent 60%),
+    var(--gradient-brand);
+  color: #fff;
+}
+
+.bulk { margin: var(--space-7) 0 0; text-align: center; color: var(--text-muted); }
+.bulk a { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }

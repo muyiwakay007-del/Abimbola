@@ -1,0 +1,58 @@
+.section {
+  position: relative;
+  background:
+    radial-gradient(70% 90% at 90% 0%, rgba(142, 69, 133, 0.45), transparent 60%),
+    linear-gradient(160deg, var(--teal-950), var(--teal-900) 55%, #1d3b5c);
+  color: #fff;
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+}
+
+.card { height: 100%; }
+.thumbLink {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: #fff;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: background-color var(--dur-base) var(--ease-soft), transform var(--dur-base) var(--ease-soft);
+}
+.thumbLink:hover { color: #fff; background: rgba(255, 255, 255, 0.11); transform: translateY(-3px); }
+.thumbLink:focus-visible { outline-color: #fff; }
+
+.thumb { position: relative; display: block; aspect-ratio: 16 / 9; background: rgba(0, 0, 0, 0.3); }
+.img { object-fit: cover; }
+.play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 62px;
+  height: 62px;
+  margin: -31px 0 0 -31px;
+  border-radius: 50%;
+  color: var(--brand-deep);
+  background: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: transform var(--dur-base) var(--ease-soft);
+}
+.play svg { margin-left: 3px; fill: currentColor; }
+.thumbLink:hover .play { transform: scale(1.08); }
+
+.meta { display: flex; flex-direction: column; gap: var(--space-1); padding: var(--space-4) var(--space-5) var(--space-5); }
+.title { font-family: var(--font-serif); font-size: 1.12rem; font-weight: 700; line-height: 1.35; }
+.date { font-size: var(--text-xs); letter-spacing: 0.08em; text-transform: uppercase; color: rgba(255, 255, 255, 0.72); }
+
+.empty { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); padding: var(--space-7); text-align: center; color: rgba(255, 255, 255, 0.85); border: 1px dashed rgba(255, 255, 255, 0.3); border-radius: var(--radius-lg); }
+.empty p { margin: 0; }
+
+.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); margin-top: var(--space-7); }
