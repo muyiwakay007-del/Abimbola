@@ -1,0 +1,57 @@
+.section {
+  position: relative;
+  background: var(--gradient-caramel-band);
+  border-block: 1px solid rgba(78, 34, 15, 0.06);
+}
+
+.grid {
+  display: grid;
+  gap: var(--space-5);
+  grid-template-columns: repeat(auto-fill, minmax(min(100%, 300px), 1fr));
+}
+
+.card { height: 100%; }
+.thumbLink {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  color: var(--text-heading);
+  background: var(--cream-50);
+  border: 1px solid var(--border-card);
+  box-shadow: var(--shadow-sm);
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  transition: background-color var(--dur-base) var(--ease-soft), transform var(--dur-base) var(--ease-soft);
+}
+.thumbLink:hover { color: var(--text-heading); box-shadow: var(--shadow-md); transform: translateY(-3px); }
+
+
+.thumb { position: relative; display: block; aspect-ratio: 16 / 9; background: var(--cream-300); }
+.img { object-fit: cover; }
+.play {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 62px;
+  height: 62px;
+  margin: -31px 0 0 -31px;
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(138, 86, 48, 0.92);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  transition: transform var(--dur-base) var(--ease-soft);
+}
+.play svg { margin-left: 3px; fill: currentColor; }
+.thumbLink:hover .play { transform: scale(1.08); }
+
+.meta { display: flex; flex-direction: column; gap: var(--space-1); padding: var(--space-4) var(--space-5) var(--space-5); }
+.title { font-family: var(--font-serif); font-size: 1.12rem; font-weight: 700; line-height: 1.35; }
+.date { font-size: var(--text-xs); letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-muted); }
+
+.empty { display: flex; flex-direction: column; align-items: center; gap: var(--space-3); padding: var(--space-7); text-align: center; color: var(--text-body); border: 1px dashed var(--gray-300); border-radius: var(--radius-lg); }
+.empty p { margin: 0; }
+
+.actions { display: flex; flex-wrap: wrap; justify-content: center; gap: var(--space-3); margin-top: var(--space-7); }

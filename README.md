@@ -1,36 +1,41 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# abimbolaolumuyiwa.com
 
-## Getting Started
+Author website for Abimbola Olumuyiwa: Kiddies Daily Devotional, Built for More, blog and YouTube.
+Next.js 16 (App Router) · CSS Modules + design tokens · Supabase (optional backend).
 
-First, run the development server:
+## Run it
 
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+npm run dev        # http://localhost:3000
+npm run build && npm start   # production build
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Where to edit content
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+**See [`src/content/README.md`](src/content/README.md).** Everything you'd want to change lives in `src/content/`:
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+| File | Contents |
+|---|---|
+| `author.ts` | Name, bio, photo, email, social links, YouTube |
+| `books.ts` | Every book: titles, covers, prices, ISBN, dates, retailer links, samples, preview images |
+| `kiddies-daily-devotional.ts` | Wording for the Kiddies Daily Devotional series pages |
+| `blog.ts` + `blog/posts.json` | Blog posts |
+| `testimonials.ts` | Reader reviews (real ones only) |
+| `site.ts` | Site URL, home page SEO, menu, contact topics |
+| `types.ts` | What each field means (strongly typed, so mistakes are caught before publishing) |
 
-## Learn More
+In `npm run dev`, yellow "Placeholder" notes show where content is still missing. They never appear in production.
 
-To learn more about Next.js, take a look at the following resources:
+## Backend
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+- **Blog**: reads the Supabase `posts` table when configured and reachable; otherwise uses `src/content/blog/posts.json`.
+  Load posts into Supabase with `npm run snapshot:wp && npm run import:wp`. Otherwise posts come from `src/content/blog/posts.json` plus `newPosts` in `src/content/blog.ts`.
+- **Newsletter & contact forms**: `src/lib/forms.ts`. Choose a provider in `.env.local`
+  (see `.env.local.example`): Brevo, Mailchimp, ConvertKit, any webhook (e.g. Formspree), or Supabase
+  (`supabase/migrations/0002_forms.sql`). Until one is set, the forms say honestly that sign-ups aren't open yet.
+- **YouTube**: latest uploads come from the channel's public RSS feed (refreshed every 6 hours).
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## House style
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+No em dashes anywhere in the copy.

@@ -1,0 +1,17 @@
+.grid { display: grid; gap: var(--space-8); align-items: start; }
+@media (min-width: 900px) {
+  .grid { grid-template-columns: 0.8fr 1.2fr; gap: var(--space-9); }
+  .portrait { position: sticky; top: calc(var(--nav-height) + var(--space-6)); }
+}
+.h2 { font-size: var(--text-h2); margin-bottom: var(--space-5); }
+.h3 { font-size: var(--text-h4); margin-bottom: var(--space-3); }
+.themes { margin-top: var(--space-6); }
+.themes ul { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; margin: 0; padding: 0; }
+.themes li { padding: 6px 14px; font-size: var(--text-sm); color: var(--brand-strong); background: var(--surface-soft); border-radius: var(--radius-pill); }
+.actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
+
+/* "My story": comfortable measure and clear paragraph separation */
+.story { max-width: 62ch; }
+.story p { margin: 0 0 var(--space-5); }
+.story p:last-child { margin-bottom: 0; }
+.story :global(.lead) { color: var(--text-heading); }
