@@ -75,8 +75,14 @@ export const mainNav = [
 export const author = {
   name: "Abimbola Olumuyiwa",
   firstName: "Abimbola",
-  /** Replace with a real photo, e.g. { src: "/images/author/abimbola.jpg", alt: "Abimbola Olumuyiwa smiling" } */
-  photo: null as { src: string; alt: string } | null,
+  /** Author portrait. `focus` is the CSS object-position used when the photo is cropped. */
+  photo: {
+    src: "/images/author/abimbola.jpg",
+    alt: "Abimbola Olumuyiwa smiling, arms folded, wearing a cream tweed jacket outdoors",
+    width: 1200,
+    height: 1500,
+    focus: "50% 50%",
+  } as { src: string; alt: string; width: number; height: number; focus?: string } | null,
   intro:
     "I'm a mum, a writer, and the author of Kiddies Daily Devotional. I wrote it because I wanted my own children to have a structured guide for their faith journey, something that would help shape their worldview and mindset from an early age.",
   /** Longer biography paragraphs for the About page. */

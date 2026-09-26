@@ -13,10 +13,11 @@ export function AuthorPortrait({ priority = false }: { priority?: boolean }) {
         <Image
           src={author.photo.src}
           alt={author.photo.alt}
-          width={560}
-          height={700}
-          sizes="(max-width: 900px) 70vw, 420px"
+          width={author.photo.width}
+          height={author.photo.height}
+          sizes="(max-width: 900px) 80vw, 420px"
           className={styles.portrait}
+          style={{ objectPosition: author.photo.focus ?? "50% 30%" }}
           preload={priority}
         />
       ) : (
