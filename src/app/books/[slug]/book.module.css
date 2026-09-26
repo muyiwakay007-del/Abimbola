@@ -104,3 +104,23 @@
 }
 .finalTitle { color: #fff; font-size: var(--text-h2); margin: 0 0 var(--space-2); }
 .finalText { margin: 0; color: rgba(255, 255, 255, 0.88); }
+
+/* Volume switcher (Kiddies Daily Devotional) */
+.switcher { margin: 0 0 var(--space-5); }
+.switcherLabel { display: block; margin-bottom: var(--space-2); font-size: var(--text-sm); color: var(--text-muted); }
+.switcherLabel a { display: inline-block; padding: 4px 0; font-weight: 700; }
+.switcher ul { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; margin: 0; padding: 0; }
+.switchItem {
+  --vol: var(--teal-700);
+  display: inline-block;
+  padding: 0.45rem 0.9rem;
+  font-size: var(--text-sm);
+  font-weight: 700;
+  color: var(--vol);
+  background: #fff;
+  border: 1.5px solid var(--vol);
+  border-radius: var(--radius-pill);
+}
+.switchPlum { --vol: var(--plum-700); }
+.switchItem:hover { color: var(--vol); background: var(--surface-soft); }
+.switchItem[aria-current="page"] { color: #fff; background: var(--vol); }

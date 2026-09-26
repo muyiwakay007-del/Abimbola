@@ -45,7 +45,10 @@ export function Testimonials({
   title = "What Readers Are Saying",
   headingLevel = "h2",
   bookTitle = "Kiddies Daily Devotional",
+  hideWhenEmpty = false,
 }: {
+  /** Render nothing (not even placeholders or the invitation) until real testimonials exist. */
+  hideWhenEmpty?: boolean;
   bookTitle?: string;
   bookSlug?: string;
   id?: string;
@@ -53,6 +56,7 @@ export function Testimonials({
   headingLevel?: "h1" | "h2";
 }) {
   const real = allTestimonials.filter((t) => !bookSlug || !t.bookSlug || t.bookSlug === bookSlug);
+  if (hideWhenEmpty && !real.length) return null;
   const isDev = process.env.NODE_ENV !== "production";
   const list = real.length ? real : isDev ? sampleTestimonials : [];
 

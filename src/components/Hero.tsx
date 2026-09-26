@@ -26,7 +26,7 @@ export function Hero() {
             <Link href="/kiddies-daily-devotional">Kiddies Daily Devotional</Link>, 365 daily devotionals for children.
           </p>
           <div className={styles.actions}>
-            <Button href="/kiddies-daily-devotional" variant="light" size="lg" pill>
+            <Button href="#discover" variant="light" size="lg" pill>
               Explore Kiddies Daily Devotional <Icon name="arrow-right" size={18} />
             </Button>
             <Button href="/about" variant="outline-light" size="lg" pill>
@@ -37,10 +37,10 @@ export function Hero() {
 
         <div className={styles.books}>
           <Link href={`/books/${books.kddVolume1.slug}`} className={`${styles.book} ${styles.bookBack}`} aria-label={books.kddVolume1.title}>
-            <BookCover book={books.kddVolume1} sizes="(max-width: 900px) 45vw, 300px" preload />
+            <BookCover book={books.kddVolume1} sizes="(max-width: 900px) 55vw, 340px" preload />
           </Link>
           <Link href={`/books/${books.kddVolume2.slug}`} className={`${styles.book} ${styles.bookFront}`} aria-label={books.kddVolume2.title}>
-            <BookCover book={books.kddVolume2} sizes="(max-width: 900px) 45vw, 300px" preload />
+            <BookCover book={books.kddVolume2} sizes="(max-width: 900px) 55vw, 340px" preload />
           </Link>
           <p className={styles.caption}>
             <span>Kiddies Daily Devotional</span>{" "}

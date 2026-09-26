@@ -93,6 +93,35 @@ export const kddSeries = {
     "The devotional promotes essential values such as faith, love, confidence, diligence, and obedience, helping children build a strong spiritual foundation. Whether read as a family or enjoyed independently, Kiddies Daily Devotional inspires a generation to live out their faith and strive to be their best selves.",
   ],
   audiences: ["Parents", "Children", "Christian families", "Schools", "Churches", "Children's ministries", "Organizations serving children"],
+
+  /* ---------- Marketing copy used on the home page and series page ---------- */
+  tagline: "365 Daily Devotionals for Children",
+  valueProp: "Helping children build a daily habit of engaging with God's Word.",
+  /** Short "who it's for" list for the featured-book section. */
+  usefulFor: ["Parents", "Families", "Schools", "Churches", "Children's ministries"],
+  /** Facts shown under the main book CTA (from the Amazon listings). */
+  quickFacts: ["2 volumes", "365 devotionals", "192 pages each", "Ages baby to 12", "Paperback & hardcover"],
+  /** "Why Parents Love This Format": describes the format, not reviews. */
+  formatPoints: [
+    { key: "days", title: "365 Days", text: "A devotional for every day of the year, across two volumes." },
+    { key: "short", title: "Short Lessons", text: "Brief, easy-to-understand readings that fit naturally into a daily routine." },
+    { key: "topics", title: "Relatable Topics", text: "From \"God, the Father\" to \"I Stir Up the Gift of God in Me\", themes children can connect with." },
+    { key: "verse", title: "Bible Memory Verses", text: "A verse each day to read, repeat and hide in the heart." },
+    { key: "illustration", title: "Illustrations", text: "Vibrant pictures that bring each lesson to life." },
+    { key: "prayer", title: "Prayer", text: "A heartfelt prayer to close each day's reading." },
+  ],
+  /** "Perfect For" settings. */
+  perfectFor: [
+    { key: "home", title: "Home", text: "A simple daily rhythm for family devotions, read together or independently." },
+    { key: "church", title: "Church", text: "A resource for Sunday school classes and for families to continue at home." },
+    { key: "school", title: "School", text: "Short daily readings for devotion time in Christian schools and classrooms." },
+    { key: "ministry", title: "Children's Ministry", text: "Ready-to-use daily content for children's ministry leaders and volunteers." },
+  ],
+  /** How the two volumes fit together. */
+  volumeRoles: {
+    1: { label: "Start here", days: 183, accent: "teal" },
+    2: { label: "Complete the year", days: 182, accent: "plum" },
+  } as Record<number, { label: string; days: number; accent: "teal" | "plum" }>,
 };
 
 /* ------------------------------------------------------------------ */

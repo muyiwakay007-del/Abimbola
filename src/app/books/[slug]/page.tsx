@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getBook, publishedBooks, bookOrder, kddSeries, sampleLink } from "@/content/books";
+import { getBook, publishedBooks, bookOrder, kddSeries, kddVolumes, sampleLink } from "@/content/books";
 import { pageMetadata, bookSchema, breadcrumbSchema } from "@/lib/seo";
 import { JsonLd } from "@/components/JsonLd";
 import { BookCover } from "@/components/books/BookCover";
@@ -85,6 +85,26 @@ export default async function BookPage({ params }: Props) {
               <p className={styles.author}>
                 by <Link href="/about">{book.author}</Link>
               </p>
+              {isKdd && (
+                <nav className={styles.switcher} aria-label="Volumes in the Kiddies Daily Devotional collection">
+                  <span className={styles.switcherLabel}>
+                    Part of the <Link href="/kiddies-daily-devotional">Kiddies Daily Devotional</Link> collection
+                  </span>
+                  <ul>
+                    {kddVolumes.map((v) => (
+                      <li key={v.slug}>
+                        <Link
+                          href={`/books/${v.slug}`}
+                          aria-current={v.slug === book.slug ? "page" : undefined}
+                          className={`${styles.switchItem} ${v.volume === 2 ? styles.switchPlum : ""}`}
+                        >
+                          Volume {v.volume} · {kddSeries.volumeRoles[v.volume ?? 0]?.days} days
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
+                </nav>
+              )}
 
               <div className={styles.priceBox}>
                 {book.formats.length > 0 ? (

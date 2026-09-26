@@ -3,7 +3,7 @@ import { pageMetadata, bookSchema, breadcrumbSchema } from "@/lib/seo";
 import { JsonLd } from "@/components/JsonLd";
 import { PageHeader } from "@/components/PageHeader";
 import { BookCard } from "@/components/books/BookCard";
-import { FeaturedBook } from "@/components/books/FeaturedBook";
+import { VolumeSet } from "@/components/kdd/VolumeSet";
 import { Newsletter } from "@/components/forms/Newsletter";
 import bookStyles from "@/components/books/books.module.css";
 
@@ -34,7 +34,7 @@ export default function BooksPage() {
         </div>
       </section>
 
-      <FeaturedBook id="kdd" />
+      <VolumeSet id="kdd" eyebrow="Kiddies Daily Devotional" />
       <Newsletter />
     </>
   );

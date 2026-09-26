@@ -1,17 +1,21 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { site } from "@/content/site";
-import { bookOrder, kddSeries, kddVolumes } from "@/content/books";
+import { books, kddVolumes, bookHref } from "@/content/books";
 import { getRecentPosts } from "@/lib/posts";
 import { getLatestVideos } from "@/lib/youtube";
 import { bookSchema, pageMetadata, personSchema, websiteSchema } from "@/lib/seo";
 import { JsonLd } from "@/components/JsonLd";
 import { Hero } from "@/components/Hero";
-import { FeaturedBook } from "@/components/books/FeaturedBook";
-import { BookCard } from "@/components/books/BookCard";
+import { JourneyNav } from "@/components/kdd/JourneyNav";
+import { KddDiscover } from "@/components/kdd/KddDiscover";
+import { FormatSection } from "@/components/kdd/FormatSection";
+import { PerfectFor } from "@/components/kdd/PerfectFor";
+import { VolumeSet } from "@/components/kdd/VolumeSet";
+import { GiftCta } from "@/components/kdd/GiftCta";
 import { BookPreview } from "@/components/books/BookPreview";
+import { BookCover } from "@/components/books/BookCover";
 import { SectionHeading } from "@/components/SectionHeading";
-import { FeatureCard, FeatureGrid } from "@/components/FeatureCard";
 import { DailyParts } from "@/components/DailyParts";
 import { AuthorSection } from "@/components/AuthorSection";
 import { Testimonials } from "@/components/Testimonials";
@@ -19,7 +23,6 @@ import { BlogCard } from "@/components/BlogCard";
 import { YouTubeSection } from "@/components/YouTubeSection";
 import { Newsletter } from "@/components/forms/Newsletter";
 import { Button } from "@/components/ui/Button";
-import bookStyles from "@/components/books/books.module.css";
 import blogStyles from "@/components/BlogCard.module.css";
 import styles from "./home.module.css";
 
@@ -32,112 +35,71 @@ export const metadata: Metadata = {
 
 export default async function HomePage() {
   const [posts, videos] = await Promise.all([getRecentPosts(3), getLatestVideos(3)]);
+  const also = books.builtForMore;
 
   return (
     <>
       <JsonLd data={[personSchema(), websiteSchema(), ...kddVolumes.map(bookSchema)]} />
 
-      {/* 2: Hero */}
+      {/* Personal welcome + the books, visible immediately */}
       <Hero />
 
-      {/* 3: Featured book */}
-      <FeaturedBook />
+      {/* ================= The book journey: Discover → Understand → Preview → Buy ================= */}
+      <div className={styles.journey}>
+        <JourneyNav />
 
-      {/* 4: Why Kiddies Daily Devotional */}
-      <section className="section" aria-labelledby="why-title">
-        <div className={`container ${styles.why}`}>
-          <div className={styles.story} data-reveal>
-            <span className="eyebrow">Why I wrote it</span>
-            <h2 id="why-title" className={styles.whyTitle}>
-              More Than a Devotional. A Daily Faith Journey.
-            </h2>
-            <blockquote className={styles.storyQuote}>
-              <p>{kddSeries.story}</p>
-              <footer className={styles.signature}>Abimbola</footer>
-            </blockquote>
+        {/* 01 Discover */}
+        <KddDiscover step="discover" eyebrow="Step 1 · Discover" />
+
+        {/* 02 Understand */}
+        <FormatSection step="understand" eyebrow="Step 2 · Understand" />
+        <section data-step="understand" className={`section ${styles.inside}`} aria-labelledby="inside-title">
+          <div className="container">
+            <SectionHeading
+              id="inside-title"
+              tone="light"
+              eyebrow="A day inside the book"
+              title="Five parts to every devotional"
+              intro="A simple, repeatable rhythm children can follow each day, on their own or with you beside them."
+            />
+            <DailyParts />
           </div>
-          <FeatureGrid min={220}>
-            <FeatureCard icon="calendar" title="365 Days" accent="teal">
-              A full year of daily devotional content across two volumes.
-            </FeatureCard>
-            <FeatureCard icon="child" title="Child-Friendly" accent="plum" delay={80}>
-              Relatable lessons written with children in mind.
-            </FeatureCard>
-            <FeatureCard icon="sprout" title="Practical Faith" accent="emerald" delay={160}>
-              Bible truth connected to everyday life.
-            </FeatureCard>
-            <FeatureCard icon="family" title="Built for Families" accent="blue" delay={240}>
-              Useful for parents, schools, churches and children&apos;s ministries.
-            </FeatureCard>
-          </FeatureGrid>
-        </div>
-      </section>
+        </section>
+        <PerfectFor step="understand" />
 
-      {/* 5: Meet the author */}
+        {/* 03 Preview */}
+        <BookPreview books={kddVolumes} step="preview" eyebrow="Step 3 · Preview" nextHref="#buy" />
+        <Testimonials hideWhenEmpty />
+
+        {/* 04 Buy */}
+        <VolumeSet step="buy" eyebrow="Step 4 · Buy" />
+      </div>
+
+      {/* ================= Getting to know Abimbola ================= */}
       <AuthorSection />
 
-      {/* 6: Book collection */}
-      <section className={`section ${styles.collection}`} id="books" aria-labelledby="collection-title">
+      {/* Also by the author (kept deliberately light) */}
+      <section className="section-tight" aria-labelledby="also-title">
         <div className="container">
-          <SectionHeading
-            id="collection-title"
-            eyebrow="The Bookshop"
-            title="Books by Abimbola Olumuyiwa"
-            intro="Faith-filled books for children, families, and anyone searching for purpose."
-          />
-          <div className={bookStyles.grid}>
-            {bookOrder.map((b) => (
-              <BookCard key={b.slug} book={b} />
-            ))}
+          <div className={styles.also} data-reveal>
+            <Link href={bookHref(also)} className={styles.alsoCover} tabIndex={-1} aria-hidden="true">
+              <BookCover book={also} sizes="140px" />
+            </Link>
+            <div className={styles.alsoBody}>
+              <span className="eyebrow">Also by Abimbola</span>
+              <h2 id="also-title" className={styles.alsoTitle}>
+                {also.title}
+                {also.subtitle && <span className={styles.alsoSub}>{also.subtitle}</span>}
+              </h2>
+              <p className={styles.alsoText}>{also.shortDescription}</p>
+              <Button href={bookHref(also)} variant="secondary" size="sm" pill>
+                Learn More
+              </Button>
+            </div>
           </div>
         </div>
       </section>
 
-      {/* 7: What's inside */}
-      <section className={`section ${styles.inside}`} aria-labelledby="inside-title">
-        <div className="container">
-          <SectionHeading
-            id="inside-title"
-            tone="light"
-            eyebrow="What's Inside"
-            title="Five parts to every devotional"
-            intro="A simple, repeatable rhythm children can follow each day, on their own or with you beside them."
-          />
-          <DailyParts />
-        </div>
-      </section>
-
-      {/* 8: Who is it for? */}
-      <section className="section" aria-labelledby="audience-title">
-        <div className="container">
-          <SectionHeading id="audience-title" eyebrow="Who It's For" title="Made for the people who shape young hearts" />
-          <FeatureGrid min={230}>
-            <FeatureCard icon="parents" title="Parents" accent="teal">
-              Help your child build a consistent devotional routine.
-            </FeatureCard>
-            <FeatureCard icon="school" title="Schools" accent="blue" delay={80}>
-              A practical resource for nurturing faith and character.
-            </FeatureCard>
-            <FeatureCard icon="church" title="Churches" accent="plum" delay={160}>
-              A useful resource for children&apos;s ministries and discipleship.
-            </FeatureCard>
-            <FeatureCard icon="heart" title="Families" accent="emerald" delay={240}>
-              Create meaningful moments around God&apos;s Word together.
-            </FeatureCard>
-          </FeatureGrid>
-          <p className={styles.bulk} data-reveal>
-            Ordering for a school, church or ministry? <Link href="/contact?topic=School%20or%20church">Get in touch about group orders</Link>.
-          </p>
-        </div>
-      </section>
-
-      {/* 9: Book preview */}
-      <BookPreview books={kddVolumes} />
-
-      {/* 10: Testimonials */}
-      <Testimonials />
-
-      {/* 11: Blog */}
       {posts.length > 0 && (
         <section className="section" aria-labelledby="journal-title">
           <div className="container">
@@ -162,10 +124,11 @@ export default async function HomePage() {
         </section>
       )}
 
-      {/* 12: YouTube */}
       <YouTubeSection videos={videos} />
 
-      {/* 13: Newsletter */}
+      {/* Warm closing invitation */}
+      <GiftCta />
+
       <Newsletter />
     </>
   );

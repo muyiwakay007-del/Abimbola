@@ -88,14 +88,14 @@
 /* --- Fanned book covers --- */
 .books {
   position: relative;
-  width: min(100%, 470px);
+  width: min(100%, 540px);
   margin-inline: auto;
   aspect-ratio: 1 / 0.92;
 }
 .book {
   position: absolute;
   display: block;
-  width: 62%;
+  width: 64%;
   transition: transform var(--dur-slow) var(--ease-soft);
 }
 .book:focus-visible { outline-color: #fff; }

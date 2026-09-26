@@ -38,12 +38,12 @@ export function BookActions({
       {buy && <BookPurchaseButton retailer={buy.retailer} url={buy.url} label={short ? "Buy Now" : buy.label} size={size} />}
       {sample && (
         <Button href={sample.url} external={sample.external} variant="secondary" size={size} pill>
-          {short ? "Read Sample" : sample.label}
+          {short ? "Read a Sample" : sample.label}
         </Button>
       )}
       {showDetails && (
         <Button href={bookHref(book)} variant="ghost" size={size}>
-          View Book →
+          Learn More →
         </Button>
       )}
     </div>

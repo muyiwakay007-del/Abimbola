@@ -17,22 +17,30 @@ export function BookPreview({
   id = "preview",
   title = "Take a Peek Inside",
   intro = "Each page pairs a topic, memory verse, narration, illustration and prayer, made to be read together or independently.",
+  eyebrow = "Book Preview",
+  step,
+  nextHref,
 }: {
   books: Book[];
   id?: string;
   title?: string;
   intro?: string;
+  eyebrow?: string;
+  /** Journey step this section belongs to (sticky step indicator). */
+  step?: string;
+  /** Optional "Choose your volume" link shown beside the sample button. */
+  nextHref?: string;
 }) {
   const images = books.flatMap((b) => b.previewImages.map((img) => ({ ...img, book: b })));
   const primary = books[0];
   const sample = sampleLink(primary);
 
   return (
-    <section className={`section ${styles.section}`} id={id} aria-labelledby={`${id}-title`}>
+    <section className={`section ${styles.section}`} id={id} data-step={step} aria-labelledby={`${id}-title`}>
       <div className="container">
         <SectionHeading
           id={`${id}-title`}
-          eyebrow="Book Preview"
+          eyebrow={eyebrow}
           title={title}
           intro={intro}
         />
@@ -71,9 +79,16 @@ export function BookPreview({
 
         {sample && (
           <div className={styles.cta} data-reveal>
-            <Button href={sample.url} external={sample.external} variant="accent" size="lg" pill>
-              <Icon name="eye" size={20} /> Read a Sample
-            </Button>
+            <div className={styles.ctaRow}>
+              <Button href={sample.url} external={sample.external} variant="accent" size="lg" pill>
+                <Icon name="eye" size={20} /> Read a Sample
+              </Button>
+              {nextHref && (
+                <Button href={nextHref} variant="secondary" size="lg" pill>
+                  Choose your volume <Icon name="arrow-right" size={18} />
+                </Button>
+              )}
+            </div>
             {!primary.sampleUrl && <p className={styles.ctaNote}>Opens the “Look inside” preview on Amazon.</p>}
           </div>
         )}
