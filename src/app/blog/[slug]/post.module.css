@@ -2,7 +2,7 @@
 
 .cover { position: relative; height: clamp(220px, 18vw + 160px, 420px); background: var(--gray-100); }
 .coverImg { object-fit: cover; }
-.coverShade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0, 0, 0, 0) 35%, rgba(11, 79, 74, 0.45) 100%); }
+.coverShade { position: absolute; inset: 0; background: linear-gradient(180deg, rgba(0, 0, 0, 0) 35%, rgba(78, 34, 15, 0.45) 100%); }
 
 .wrap { position: relative; margin-top: clamp(-110px, -8vw, -60px); }
 .card {

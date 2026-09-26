@@ -2,10 +2,10 @@ import type { ReactNode } from "react";
 import { Icon, type IconName } from "@/components/ui/Icon";
 
 const accents = {
-  teal: { fg: "var(--brand-strong)", bg: "var(--surface-soft)" },
-  plum: { fg: "var(--accent)", bg: "var(--surface-blossom)" },
-  blue: { fg: "var(--blue-700)", bg: "var(--blue-100)" },
-  emerald: { fg: "#047857", bg: "var(--emerald-100)" },
+  teal: { fg: "var(--caramel-700)", bg: "var(--caramel-100)" },
+  plum: { fg: "var(--sage-700)", bg: "var(--sage-100)" },
+  blue: { fg: "var(--brown-700)", bg: "var(--cream-300)" },
+  emerald: { fg: "var(--sage-900)", bg: "var(--sage-200)" },
 } as const;
 
 export type FeatureAccent = keyof typeof accents;

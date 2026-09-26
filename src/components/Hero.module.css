@@ -2,7 +2,8 @@
   position: relative;
   overflow: hidden;
   background: var(--gradient-hero);
-  color: #fff;
+  color: var(--text-heading);
+  border-bottom: 1px solid rgba(78, 34, 15, 0.08);
   isolation: isolate;
 }
 /* soft blossom + mint glows for depth */
@@ -18,14 +19,14 @@
   height: 520px;
   top: -180px;
   right: 8%;
-  background: radial-gradient(circle, rgba(233, 168, 201, 0.4) 0%, rgba(233, 168, 201, 0) 68%);
+  background: radial-gradient(circle, rgba(210, 166, 122, 0.3) 0%, rgba(210, 166, 122, 0) 68%);
 }
 .glowB {
   width: 560px;
   height: 560px;
   bottom: -300px;
   left: -140px;
-  background: radial-gradient(circle, rgba(94, 234, 212, 0.28) 0%, rgba(94, 234, 212, 0) 68%);
+  background: radial-gradient(circle, rgba(176, 186, 153, 0.4) 0%, rgba(176, 186, 153, 0) 68%);
 }
 
 .inner {
@@ -49,36 +50,52 @@
   font-weight: 700;
   letter-spacing: 0.24em;
   text-transform: uppercase;
-  color: var(--teal-100);
+  color: var(--caramel-700);
 }
 
 .title {
   font-family: var(--font-script);
-  font-weight: 700;
+  font-weight: 600;
   font-size: var(--text-hero);
   line-height: 1;
   letter-spacing: 0.005em;
-  color: #fff;
+  color: var(--brown-900);
   margin: 0 0 var(--space-5);
-  text-shadow: 0 6px 30px rgba(8, 59, 56, 0.25);
 }
 
 .intro {
+  max-width: 34ch;
   font-size: var(--text-lead);
   line-height: var(--lh-snug);
-  color: rgba(255, 255, 255, 0.95);
+  color: var(--text-body);
   margin-bottom: var(--space-4);
 }
 .author {
+  display: flex;
+  align-items: center;
+  gap: var(--space-4);
+  margin-bottom: var(--space-7);
   font-size: 1rem;
-  line-height: 1.65;
-  color: rgba(255, 255, 255, 0.85);
-  margin-bottom: var(--space-6);
+  line-height: 1.5;
+  color: var(--text-body);
 }
-.author strong { color: #fff; }
-.author a { color: #fff; text-decoration: underline; text-decoration-color: rgba(255, 255, 255, 0.5); text-underline-offset: 3px; }
-.author a:hover { text-decoration-color: #fff; }
-.author a:focus-visible { outline-color: #fff; }
+.author p { margin: 0; }
+.author span { display: block; font-size: 0.95rem; }
+.avatar {
+  flex: none;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  object-fit: cover;
+  box-shadow: 0 0 0 3px var(--cream-50), 0 8px 20px rgba(78, 34, 15, 0.22);
+}
+.name { font-family: var(--font-script); font-size: 1.45rem; font-weight: 700; color: var(--brown-900); }
+@media (max-width: 899px) {
+  .author { justify-content: center; text-align: left; }
+}
+.author a { color: var(--caramel-700); text-decoration: underline; text-decoration-color: var(--caramel-300); text-underline-offset: 3px; }
+.author a:hover { color: var(--brown-900); text-decoration-color: var(--caramel-700); }
+
 
 .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); }
 @media (max-width: 899px) {
@@ -98,7 +115,7 @@
   width: 64%;
   transition: transform var(--dur-slow) var(--ease-soft);
 }
-.book:focus-visible { outline-color: #fff; }
+
 .bookBack { left: 0; top: 0; transform: rotate(-6deg); }
 .bookFront { right: 0; top: 16%; transform: rotate(4deg); z-index: 1; }
 .books:hover .bookBack { transform: rotate(-8deg) translate(-6px, -4px); }
@@ -112,10 +129,11 @@
   padding: 0.5rem 0.95rem;
   font-size: var(--text-xs);
   letter-spacing: 0.04em;
-  color: #fff;
-  background: rgba(8, 59, 56, 0.55);
+  color: var(--text-heading);
+  background: rgba(255, 252, 245, 0.85);
   backdrop-filter: blur(6px);
-  border: 1px solid rgba(255, 255, 255, 0.2);
+  border: 1px solid rgba(78, 34, 15, 0.12);
+  box-shadow: 0 6px 18px rgba(78, 34, 15, 0.1);
   border-radius: var(--radius-pill);
   z-index: 2;
 }

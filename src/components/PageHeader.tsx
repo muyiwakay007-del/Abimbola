@@ -19,7 +19,7 @@ export function PageHeader({
     <header style={{ position: "relative", background: "var(--gradient-soft)", paddingBlock: "clamp(3rem, 2rem + 4vw, 5.5rem)", overflow: "hidden" }}>
       <div
         aria-hidden="true"
-        style={{ position: "absolute", width: 480, height: 480, top: -220, right: -120, borderRadius: "50%", background: "radial-gradient(circle, rgba(94,234,212,0.25), transparent 70%)" }}
+        style={{ position: "absolute", width: 480, height: 480, top: -220, right: -120, borderRadius: "50%", background: "radial-gradient(circle, rgba(176, 186, 153,0.25), transparent 70%)" }}
       />
       <div className="container container-narrow" style={{ position: "relative", textAlign: "center" }}>
         {breadcrumb && (

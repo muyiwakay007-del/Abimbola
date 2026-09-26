@@ -31,11 +31,11 @@ export function Newsletter({ id = "newsletter" }: { id?: string }) {
     <section className={styles.newsletter} id={id} aria-labelledby={`${uid}-title`}>
       <div className={`container ${styles.newsletterInner}`}>
         <div className={styles.newsletterCopy} data-reveal>
-          <span className="eyebrow" style={{ color: "var(--teal-100)" }}>
+          <span className="eyebrow">
             Newsletter
           </span>
           <h2 id={`${uid}-title`} className={styles.newsletterTitle}>
-            Stay Connected
+            Stay <em>Connected</em>
           </h2>
           <p className={styles.newsletterText}>Get updates on new books, reflections, resources, and what&apos;s happening next.</p>
         </div>

@@ -46,8 +46,8 @@
   text-align: center;
   color: var(--brand-strong);
   background:
-    linear-gradient(90deg, rgba(21, 34, 56, 0.05), transparent 6%, transparent 94%, rgba(21, 34, 56, 0.05)),
-    #fffdf9;
+    linear-gradient(90deg, rgba(78, 34, 15, 0.05), transparent 6%, transparent 94%, rgba(78, 34, 15, 0.05)),
+    #fffcf5;
   border: 1px solid var(--border-card);
   border-radius: var(--radius-md);
   box-shadow: var(--shadow-sm);

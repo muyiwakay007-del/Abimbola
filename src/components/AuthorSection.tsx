@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { author } from "@/content/site";
+import { author } from "@/content/author";
 import { Button } from "@/components/ui/Button";
 import { DevNote } from "@/components/ui/DevNote";
 import styles from "./AuthorSection.module.css";

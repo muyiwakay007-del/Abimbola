@@ -1,144 +1,40 @@
 /**
  * ============================================================
- *  BOOKS: the single place to manage every book on the site.
+ *  BOOKS: the single source of truth for every book.
  * ============================================================
- *  • Change a price, link, cover or description here and it updates
- *    everywhere (home page, Books page, book detail pages, SEO data).
- *  • Anything `null` / empty is a placeholder and is hidden or shown
- *    as "coming soon": nothing is invented.
- *  • Details below come from the Amazon listings. Amazon prices change
- *    from time to time: update `price` / `formats` when they do.
- *  • To add a retailer, append to `purchaseLinks`
- *    (retailer: "amazon" | "barnes-noble" | "apple-books" | "bookshop" | "other").
- *  • To add a new book, copy an entry, give it a unique `slug`, and add
- *    it to `bookOrder` at the bottom.
+ *  Change something here and it updates everywhere the book appears:
+ *  home page, Books page, book pages, the Kiddies Daily Devotional
+ *  product page, footer, buy buttons, comparison table and the data
+ *  search engines read.
+ *
+ *  Quick reference:
+ *    Price ................ formats → price        ("$26.99", or null)
+ *    Buy buttons .......... retailers → amazon / barnesNoble / appleBooks / bookshop / other
+ *    "Read a Sample" ...... sample                 (null hides the button)
+ *    "Peek Inside" ........ previewImages
+ *    Cover ................ cover                  (null shows a placeholder)
+ *    Hide a book .......... visible: false
+ *
+ *  Field meanings are documented in src/content/types.ts.
+ *  Information here comes from the books' Amazon listings.
  */
-
-export type Retailer = "amazon" | "barnes-noble" | "apple-books" | "bookshop" | "other";
-
-export type PurchaseLink = {
-  retailer: Retailer;
-  url: string;
-  /** Button text, e.g. "Buy on Amazon". */
-  label: string;
-  /** Optional format this link is for, e.g. "Paperback". */
-  format?: string;
-};
-
-export type BookFormat = { format: string; price: string | null };
-
-export type BookImage = { src: string; alt: string; width: number; height: number; caption?: string };
-
-export type Book = {
-  /** URL segment: /books/<slug> */
-  slug: string;
-  title: string;
-  /** Shorter title for tight spaces, e.g. "Volume 1". */
-  shortTitle: string;
-  subtitle: string | null;
-  series: string | null;
-  volume: number | null;
-  author: string;
-  category: string;
-  /** "available" books show purchase buttons; "coming-soon" shows a placeholder state. */
-  status: "available" | "coming-soon";
-  /** Small ribbon on the cover, e.g. "New Release". */
-  tag: string | null;
-  cover: BookImage | null;
-  /** One or two sentences for cards. */
-  shortDescription: string;
-  /** Full description paragraphs for the detail page. */
-  description: string[];
-  /** Headline price shown on cards. */
-  price: string | null;
-  formats: BookFormat[];
-  purchaseLinks: PurchaseLink[];
-  /** Link to a sample PDF or preview. Leave null to fall back to "Look inside" on Amazon. */
-  sampleUrl: string | null;
-  /** Interior spreads / sample pages for the "Take a Peek Inside" gallery. */
-  previewImages: BookImage[];
-  /** Publication details shown on the detail page (publisher, pages, ISBN, date…). */
-  details: { label: string; value: string }[];
-  isbn: string | null;
-  /** Marks entries that still need real details (shown with a hint in development). */
-  placeholder?: boolean;
-};
-
-/* ------------------------------------------------------------------ */
-/*  Shared Kiddies Daily Devotional copy                               */
-/* ------------------------------------------------------------------ */
-
-export const kddSeries = {
-  name: "Kiddies Daily Devotional",
-  slug: "kiddies-daily-devotional",
-  /** From the cover. */
-  coverLine: "Daily devotionals for the child with a great destiny in Christ",
-  summary:
-    "365 daily devotionals designed to help children grow in faith, understand God's Word, and discover their identity in Christ, one day at a time.",
-  /** The author's own story. */
-  story:
-    "As a mum, I wanted my own children to have a structured guide for their faith journey and help shape their worldview and mindset from an early age. I decided to write a children's devotional that contains 365 unique, relatable topics alongside vibrant illustrations and practical child-friendly applications.",
-  /** What every daily devotional contains. */
-  dailyParts: [
-    { key: "topic", title: "Topic of the Day", text: "A clear, relatable theme that sets the focus for the day." },
-    { key: "verse", title: "Bible Memory Verse", text: "A short scripture to read, repeat and hide in the heart." },
-    { key: "narration", title: "Narration", text: "A child-friendly explanation that connects the verse to everyday life." },
-    { key: "illustration", title: "Illustration", text: "A vibrant picture that brings the lesson to life." },
-    { key: "prayer", title: "Prayer of the Day", text: "A heartfelt prayer children can pray in their own words." },
-  ],
-  /** Published product description (as listed on Amazon). */
-  description: [
-    "Empower your child with daily devotions that inspire faith, love, and confidence. Each lesson is designed to build a strong foundation in God's Word, encouraging young hearts to invite Him into their lives and grow in their spiritual journey every day.",
-    "Kiddies Daily Devotional is a year-long guide that helps children discover their identity in Christ, one joyful day at a time. This engaging devotional is filled with 365 short, easy-to-understand lessons, making it perfect for young readers. Each devotion features a memory verse, relatable explanations, illustrations, and heartfelt prayers, ensuring that children can connect with God in a meaningful way.",
-    "The devotional promotes essential values such as faith, love, confidence, diligence, and obedience, helping children build a strong spiritual foundation. Whether read as a family or enjoyed independently, Kiddies Daily Devotional inspires a generation to live out their faith and strive to be their best selves.",
-  ],
-  audiences: ["Parents", "Children", "Christian families", "Schools", "Churches", "Children's ministries", "Organizations serving children"],
-
-  /* ---------- Marketing copy used on the home page and series page ---------- */
-  tagline: "365 Daily Devotionals for Children",
-  valueProp: "Helping children build a daily habit of engaging with God's Word.",
-  /** Short "who it's for" list for the featured-book section. */
-  usefulFor: ["Parents", "Families", "Schools", "Churches", "Children's ministries"],
-  /** Facts shown under the main book CTA (from the Amazon listings). */
-  quickFacts: ["2 volumes", "365 devotionals", "192 pages each", "Ages baby to 12", "Paperback & hardcover"],
-  /** "Why Parents Love This Format": describes the format, not reviews. */
-  formatPoints: [
-    { key: "days", title: "365 Days", text: "A devotional for every day of the year, across two volumes." },
-    { key: "short", title: "Short Lessons", text: "Brief, easy-to-understand readings that fit naturally into a daily routine." },
-    { key: "topics", title: "Relatable Topics", text: "From \"God, the Father\" to \"I Stir Up the Gift of God in Me\", themes children can connect with." },
-    { key: "verse", title: "Bible Memory Verses", text: "A verse each day to read, repeat and hide in the heart." },
-    { key: "illustration", title: "Illustrations", text: "Vibrant pictures that bring each lesson to life." },
-    { key: "prayer", title: "Prayer", text: "A heartfelt prayer to close each day's reading." },
-  ],
-  /** "Perfect For" settings. */
-  perfectFor: [
-    { key: "home", title: "Home", text: "A simple daily rhythm for family devotions, read together or independently." },
-    { key: "church", title: "Church", text: "A resource for Sunday school classes and for families to continue at home." },
-    { key: "school", title: "School", text: "Short daily readings for devotion time in Christian schools and classrooms." },
-    { key: "ministry", title: "Children's Ministry", text: "Ready-to-use daily content for children's ministry leaders and volunteers." },
-  ],
-  /** How the two volumes fit together. */
-  volumeRoles: {
-    1: { label: "Start here", days: 183, accent: "teal" },
-    2: { label: "Complete the year", days: 182, accent: "plum" },
-  } as Record<number, { label: string; days: number; accent: "teal" | "plum" }>,
-};
-
-/* ------------------------------------------------------------------ */
-/*  The books                                                          */
-/* ------------------------------------------------------------------ */
+import type { Book } from "./types";
+import { kddSeries } from "./kiddies-daily-devotional";
 
 export const books = {
+  /* ------------------------------------------------------------------ */
+  /*  KIDDIES DAILY DEVOTIONAL: VOLUME 1                                 */
+  /* ------------------------------------------------------------------ */
   kddVolume1: {
     slug: "kiddies-daily-devotional-volume-1",
+    visible: true,
+    status: "available",
     title: "Kiddies Daily Devotional: Volume 1",
     shortTitle: "Volume 1",
     subtitle: kddSeries.coverLine,
-    series: kddSeries.name,
-    volume: 1,
     author: "Abimbola Olumuyiwa",
+    series: { name: kddSeries.name, volume: 1 },
     category: "Children's Devotional",
-    status: "available",
     tag: null,
     cover: {
       src: "/images/books/kiddies-daily-devotional-volume-1.jpg",
@@ -147,48 +43,52 @@ export const books = {
       height: 1000,
     },
     shortDescription:
-      "The first volume: 183 engaging lessons, each with a memory verse, relatable explanation, illustration and heartfelt prayer.",
+      "The first volume of the collection. Engaging daily lessons, each with a memory verse, relatable explanation, illustration and heartfelt prayer.",
     description: kddSeries.description,
-    price: null, // add the confirmed paperback price, e.g. "$24.99"
     formats: [
-      { format: "Paperback", price: null },
+      { format: "Paperback", price: null }, // add the confirmed price, e.g. "$24.99"
       { format: "Hardcover", price: null },
     ],
-    purchaseLinks: [
-      { retailer: "amazon", label: "Buy on Amazon", format: "Paperback & Hardcover", url: "https://www.amazon.com/dp/B0H3YD19V6" },
-    ],
-    sampleUrl: null,
+    isbn: "979-8318821684",
+    publisher: "Palmetto Publishing",
+    publicationDate: "2026-06-15",
+    pages: 192,
+    readingAge: "Baby – 12 years",
+    dimensions: "8.5 × 8.5 in",
+    devotionalCount: 183,
+    retailers: {
+      amazon: "https://www.amazon.com/dp/B0H3YD19V6",
+      barnesNoble: null,
+      appleBooks: null,
+      bookshop: null,
+      other: [],
+    },
+    sample: { kind: "amazon-look-inside" }, // uses retailers.amazon
     previewImages: [
       {
         src: "/images/books/kiddies-daily-devotional-volume-1-back.jpg",
         alt: "Back cover of Kiddies Daily Devotional Volume 1 showing four interior illustrations and the book description",
         width: 600,
         height: 600,
-        caption: "Volume 1: back cover with interior illustrations",
+        caption: "Back cover with interior illustrations",
       },
     ],
-    details: [
-      { label: "Devotionals", value: "183 days" },
-      { label: "Publisher", value: "Palmetto Publishing" },
-      { label: "Published", value: "June 15, 2026" },
-      { label: "Print length", value: "192 pages" },
-      { label: "Reading age", value: "Baby – 12 years" },
-      { label: "Dimensions", value: "8.5 × 8.5 in" },
-    ],
-    isbn: "979-8318821684",
   },
 
+  /* ------------------------------------------------------------------ */
+  /*  KIDDIES DAILY DEVOTIONAL: VOLUME 2                                 */
+  /* ------------------------------------------------------------------ */
   kddVolume2: {
     slug: "kiddies-daily-devotional-volume-2",
+    visible: true,
+    status: "available",
     title: "Kiddies Daily Devotional: Volume 2",
     shortTitle: "Volume 2",
     subtitle: kddSeries.coverLine,
-    series: kddSeries.name,
-    volume: 2,
     author: "Abimbola Olumuyiwa",
+    series: { name: kddSeries.name, volume: 2 },
     category: "Children's Devotional",
-    status: "available",
-    tag: "New Release",
+    tag: null,
     cover: {
       src: "/images/books/kiddies-daily-devotional-volume-2.jpg",
       alt: "Cover of Kiddies Daily Devotional Volume 2 by Abimbola Olumuyiwa: four smiling children in a bright classroom",
@@ -196,47 +96,52 @@ export const books = {
       height: 1200,
     },
     shortDescription:
-      "The second volume completes the year: 182 engaging lessons with a memory verse, relatable explanation, illustration and heartfelt prayer.",
+      "The second volume completes the year. More daily lessons, each with a memory verse, relatable explanation, illustration and heartfelt prayer.",
     description: kddSeries.description,
-    price: "$26.99",
     formats: [
       { format: "Paperback", price: "$26.99" },
       { format: "Hardcover", price: null },
     ],
-    purchaseLinks: [
-      { retailer: "amazon", label: "Buy on Amazon", format: "Paperback & Hardcover", url: "https://www.amazon.com/dp/B0H48FJXX5" },
-    ],
-    sampleUrl: null,
+    isbn: "979-8318839863",
+    publisher: "Palmetto Publishing",
+    publicationDate: "2026-06-15",
+    pages: 192,
+    readingAge: "Baby – 12 years",
+    dimensions: "8.5 × 8.5 in",
+    devotionalCount: 182,
+    retailers: {
+      amazon: "https://www.amazon.com/dp/B0H48FJXX5",
+      barnesNoble: null,
+      appleBooks: null,
+      bookshop: null,
+      other: [],
+    },
+    sample: { kind: "amazon-look-inside" }, // uses retailers.amazon
     previewImages: [
       {
         src: "/images/books/kiddies-daily-devotional-volume-2-back.jpg",
         alt: "Back cover of Kiddies Daily Devotional Volume 2 showing four interior illustrations and the book description",
         width: 1200,
         height: 1200,
-        caption: "Volume 2: back cover with interior illustrations",
+        caption: "Back cover with interior illustrations",
       },
     ],
-    details: [
-      { label: "Devotionals", value: "182 days" },
-      { label: "Publisher", value: "Palmetto Publishing" },
-      { label: "Published", value: "June 15, 2026" },
-      { label: "Print length", value: "192 pages" },
-      { label: "Reading age", value: "Baby – 12 years" },
-      { label: "Dimensions", value: "8.5 × 8.5 in" },
-    ],
-    isbn: "979-8318839863",
   },
 
+  /* ------------------------------------------------------------------ */
+  /*  SECOND BOOK: BUILT FOR MORE                                        */
+  /*  (details from its Amazon listing)                                  */
+  /* ------------------------------------------------------------------ */
   builtForMore: {
     slug: "built-for-more",
+    visible: true,
+    status: "available",
     title: "Built for More",
     shortTitle: "Built for More",
     subtitle: "Living a life of purpose in a crazy world",
-    series: null,
-    volume: null,
     author: "Abimbola Olumuyiwa",
+    series: null,
     category: "Christian Living",
-    status: "available",
     tag: null,
     cover: {
       src: "/images/books/built-for-more.jpg",
@@ -252,57 +157,63 @@ export const books = {
       "The lessons presented in Built for More: Living a life of purpose in a crazy world are pretty simple yet incredibly effective. Don't get caught up trying to prove to people that you are worth more than they think you are. The true meaning of your life lies in strengthening your relationship with God. Do you constantly worry about how your life will turn out to be in the future? Don't worry; we all have moments when we doubt every iota of our existence. Just have faith in God and see how your life changes for the better.",
       "For devout followers of Christianity, the Bible offers valuable lessons on finding your real-life purpose. You can live a meaningful life and find your true self if you believe in God. Discover your God-given purpose now.",
     ],
-    price: "$11.99",
     formats: [
       { format: "Paperback", price: "$11.99" },
       { format: "Kindle", price: "$4.99" },
     ],
-    purchaseLinks: [
-      { retailer: "amazon", label: "Buy on Amazon", format: "Paperback & Kindle", url: "https://www.amazon.com/dp/B09LDDDM9K" },
-    ],
-    sampleUrl: null,
-    previewImages: [],
-    details: [
-      { label: "Publisher", value: "Harmony Publishing" },
-      { label: "Published", value: "November 17, 2021" },
-      { label: "Print length", value: "174 pages" },
-      { label: "Formats", value: "Paperback, Kindle" },
-    ],
     isbn: "978-9789917945",
+    publisher: "Harmony Publishing",
+    publicationDate: "2021-11-17",
+    pages: 174,
+    readingAge: null,
+    dimensions: null,
+    devotionalCount: null,
+    retailers: {
+      amazon: "https://www.amazon.com/dp/B09LDDDM9K",
+      barnesNoble: null,
+      appleBooks: null,
+      bookshop: null,
+      other: [],
+    },
+    sample: null, // add a sample link to show "Read a Sample" for this book
+    previewImages: [],
   },
 
-  /*
-   * To add another book, copy an entry above, give it a unique key and `slug`,
-   * then add it to `bookOrder` below. For a book that isn't out yet, use
-   * status: "coming-soon", cover: null and placeholder: true.
-   */
+  /* ------------------------------------------------------------------ */
+  /*  TEMPLATE FOR A FUTURE BOOK (hidden)                                */
+  /*  Fill in what you know, leave the rest null, then set visible: true.*/
+  /*  Without a cover it shows a tasteful "cover coming soon" design.    */
+  /* ------------------------------------------------------------------ */
+  nextBook: {
+    slug: "next-book",
+    visible: false,
+    status: "coming-soon",
+    title: "New Book",
+    shortTitle: "Coming Soon",
+    subtitle: null,
+    author: "Abimbola Olumuyiwa",
+    series: null,
+    category: "Coming Soon",
+    tag: "Coming Soon",
+    cover: null,
+    shortDescription: "Details about this book will be shared here soon.",
+    description: [],
+    formats: [],
+    isbn: null,
+    publisher: null,
+    publicationDate: null,
+    pages: null,
+    readingAge: null,
+    dimensions: null,
+    devotionalCount: null,
+    retailers: { amazon: null, barnesNoble: null, appleBooks: null, bookshop: null, other: [] },
+    sample: null,
+    previewImages: [],
+  },
 } satisfies Record<string, Book>;
 
-/** Display order across the site. */
-export const bookOrder: Book[] = [books.kddVolume1, books.kddVolume2, books.builtForMore];
+/** The order books appear in across the site (hidden books are skipped automatically). */
+export const bookOrder: Book[] = [books.kddVolume1, books.kddVolume2, books.builtForMore, books.nextBook];
 
-/** The Kiddies Daily Devotional volumes. */
-export const kddVolumes: Book[] = [books.kddVolume1, books.kddVolume2];
-
-/** Books that have their own detail page (placeholders don't). */
-export const publishedBooks = bookOrder.filter((b) => !b.placeholder);
-
-export function getBook(slug: string): Book | undefined {
-  return publishedBooks.find((b) => b.slug === slug);
-}
-
-export const bookHref = (b: Book) => (b.placeholder ? "/books#collection" : `/books/${b.slug}`);
-
-/** The primary purchase link (first in the list), if any. */
-export const primaryPurchase = (b: Book) => b.purchaseLinks[0] ?? null;
-
-/**
- * Where "Read a Sample" should go: a dedicated sample if provided,
- * otherwise Amazon's "Look inside" on the listing.
- */
-export function sampleLink(b: Book): { url: string; label: string; external: boolean } | null {
-  if (b.sampleUrl) return { url: b.sampleUrl, label: "Read a Sample", external: /^https?:/.test(b.sampleUrl) };
-  const amazon = b.purchaseLinks.find((l) => l.retailer === "amazon");
-  if (amazon) return { url: amazon.url, label: "Look Inside on Amazon", external: true };
-  return null;
-}
+/** The Kiddies Daily Devotional volumes, in order. */
+export const kddVolumeList: Book[] = [books.kddVolume1, books.kddVolume2];

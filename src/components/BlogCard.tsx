@@ -11,11 +11,11 @@ export function BlogCard({ post, index = 0, headingLevel = "h3" }: { post: Post;
   const href = `/blog/${post.slug}`;
   return (
     <article className={styles.card} data-reveal style={{ ["--reveal-delay" as string]: `${(index % 3) * 90}ms` }}>
-      <div className={styles.media} style={post.cover_image_url ? undefined : { background: tones[index % tones.length] }}>
-        {post.cover_image_url && (
+      <div className={styles.media} style={post.image?.src ? undefined : { background: tones[index % tones.length] }}>
+        {post.image?.src && (
           <Image
-            src={post.cover_image_url}
-            alt={post.cover_image_alt ?? ""}
+            src={post.image?.src}
+            alt={post.image?.alt ?? ""}
             fill
             sizes="(max-width: 700px) 92vw, (max-width: 1100px) 46vw, 380px"
             className={styles.img}
@@ -24,9 +24,9 @@ export function BlogCard({ post, index = 0, headingLevel = "h3" }: { post: Post;
         <span className={styles.category}>{categoryLabel(post.category)}</span>
       </div>
       <div className={styles.body}>
-        {post.published_at && (
-          <time className={styles.date} dateTime={post.published_at}>
-            {formatDate(post.published_at)}
+        {post.date && (
+          <time className={styles.date} dateTime={post.date}>
+            {formatDate(post.date)}
           </time>
         )}
         <Heading className={styles.title}>

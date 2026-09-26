@@ -31,18 +31,19 @@ export function SectionHeading({
         alignItems: "flex-end",
         justifyContent: centered ? "center" : "space-between",
         gap: "var(--space-5)",
-        marginBottom: "var(--space-7)",
+        marginBottom: "clamp(2rem, 1.5rem + 2vw, 3.5rem)",
         textAlign: centered ? "center" : "left",
       }}
     >
       <div style={{ maxWidth: centered ? 720 : 680, marginInline: centered ? "auto" : undefined }}>
         {eyebrow && (
-          <span className="eyebrow" style={light ? { color: "var(--teal-100)" } : undefined}>
+          <span className="eyebrow" style={light ? { color: "var(--sage-200)" } : undefined}>
             {eyebrow}
           </span>
         )}
         <Tag
           id={id}
+          className={light ? "on-dark" : undefined}
           style={{
             fontSize: Tag === "h1" ? "var(--text-display)" : "var(--text-h2)",
             margin: eyebrow ? "var(--space-3) 0 0" : 0,

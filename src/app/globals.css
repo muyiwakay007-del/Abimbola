@@ -40,72 +40,89 @@
   --ls-tight: -0.015em;
   --ls-label: 0.16em;
 
-  /* --- Palette: deep teal · emerald · blue · soft purple · mauve --- */
-  --teal-950: #083b38;
-  --teal-900: #0b4f4a;
-  --teal-800: #115e59;
-  --teal-700: #0f766e; /* brand */
-  --teal-600: #0d9488;
-  --teal-300: #5eead4;
-  --teal-100: #ccfbf1;
-  --teal-50: #f0fdfa;
-  --emerald-600: #059669;
-  --emerald-100: #d1fae5;
-  --blue-700: #2f5d8a;
-  --blue-100: #e3edf7;
-  --plum-900: #5c2c57;
-  --plum-700: #8e4585; /* accent */
-  --plum-500: #b05ca5;
-  --mauve-400: #b98aaa;
-  --mauve-100: #f4ecf2;
-  --lavender-50: #f7f4fb;
-  --pink-400: #e9a8c9;
-  --pink-100: #fceef5;
+  /* --- Palette: cream · sage · caramel · dark brown ---
+     Base colours: cream #F7F1DE, sage #B0BA99, caramel #9D6638, brown #4E220F.
+     Lighter/darker steps are tints and shades of those four. */
+  --cream-50: #fffcf5;
+  --cream-100: #fbf7ec;
+  --cream-200: #f7f1de; /* base cream */
+  --cream-300: #efe5c9;
+
+  --sage-100: #eaeee0;
+  --sage-200: #d5dcc3;
+  --sage-300: #b0ba99; /* base sage */
+  --sage-500: #8a9570;
+  --sage-700: #5e6848;
+  --sage-900: #3b4330;
+
+  --caramel-100: #f3e6d6;
+  --caramel-300: #d2a67a;
+  --caramel-500: #b07a48;
+  --caramel-600: #9d6638; /* base caramel */
+  --caramel-700: #8a5630;
+  --caramel-800: #6f4323;
+
+  --brown-700: #6b3a1f;
+  --brown-800: #5a2b14;
+  --brown-900: #4e220f; /* base dark brown */
+  --brown-950: #36170a;
 
   --white: #ffffff;
-  --warm-white: #fcfaf7;
-  --cream: #f8f3ec;
-  --navy-900: #152238; /* headings */
-  --slate-700: #37425a; /* body */
-  --slate-500: #5f6b80; /* muted: AA on white & warm-white */
-  --gray-300: #d4d8df;
-  --gray-200: #e6e8ec;
-  --gray-100: #f2f3f6;
+  --warm-white: var(--cream-200);
+  --cream: var(--cream-200);
+  --ink: #3a1a0b; /* deepest text */
+  --text-brown: #5b4032; /* body */
+  --text-soft: #735a4a; /* muted: AA on cream */
+  --gray-300: #dccfb8;
+  --gray-200: #e9dfcb;
+  --gray-100: #f3ecdc;
 
   /* --- Semantic aliases --- */
-  --brand: var(--teal-700);
-  --brand-strong: var(--teal-800);
-  --brand-deep: var(--teal-900);
-  --brand-soft: var(--teal-100);
-  --accent: var(--plum-700);
-  --accent-strong: var(--plum-900);
-  --accent-soft: var(--pink-400);
+  --brand: var(--caramel-700); /* buttons, links */
+  --brand-strong: var(--caramel-800);
+  --brand-deep: var(--brown-900); /* nav, footer, dark bands */
+  --brand-soft: var(--caramel-100);
+  --accent: var(--sage-700); /* eyebrows, italic accents, Volume 2 */
+  --accent-strong: var(--sage-900);
+  --accent-soft: var(--caramel-300);
 
-  --text-heading: var(--navy-900);
-  --text-body: var(--slate-700);
-  --text-muted: var(--slate-500);
+  --text-heading: var(--brown-900);
+  --text-body: var(--text-brown);
+  --text-muted: var(--text-soft);
   --text-on-brand: var(--white);
-  --text-link: var(--teal-700);
-  --text-link-hover: var(--teal-900);
+  --text-on-dark: var(--cream-200);
+  --text-on-dark-soft: var(--sage-200);
+  --text-link: var(--caramel-700);
+  --text-link-hover: var(--brown-900);
 
-  --surface-page: var(--warm-white);
-  --surface-card: var(--white);
-  --surface-reading: var(--cream);
-  --surface-soft: var(--teal-50);
-  --surface-blossom: var(--pink-100);
-  --surface-lavender: var(--lavender-50);
-  --surface-brand: var(--teal-900);
+  --surface-page: var(--cream-200); /* #F7F1DE: the dominant colour */
+  --surface-card: var(--cream-50);
+  --surface-reading: var(--cream-100);
+  --surface-soft: var(--sage-100);
+  --surface-blossom: var(--caramel-100);
+  --surface-lavender: var(--cream-300);
+  --surface-brand: var(--brown-900);
 
   --border-subtle: var(--gray-200);
-  --border-card: #ebe7e1;
+  --border-card: #e6dcc6;
 
+  /* --- Gradients (warm, earthy) --- */
   --gradient-hero:
-    radial-gradient(120% 90% at 85% 10%, rgba(142, 69, 133, 0.55) 0%, rgba(142, 69, 133, 0) 55%),
-    radial-gradient(90% 80% at 10% 100%, rgba(5, 150, 105, 0.35) 0%, rgba(5, 150, 105, 0) 60%),
-    linear-gradient(125deg, var(--teal-950) 0%, var(--teal-700) 42%, var(--blue-700) 78%, var(--plum-700) 115%);
-  --gradient-blossom: linear-gradient(160deg, var(--pink-100) 0%, var(--lavender-50) 45%, var(--teal-50) 100%);
-  --gradient-soft: linear-gradient(180deg, var(--warm-white) 0%, var(--mauve-100) 100%);
-  --gradient-brand: linear-gradient(135deg, var(--teal-900) 0%, var(--teal-700) 55%, var(--blue-700) 100%);
+    radial-gradient(70% 90% at 100% 0%, rgba(176, 186, 153, 0.45) 0%, rgba(176, 186, 153, 0) 60%),
+    radial-gradient(60% 80% at 0% 100%, rgba(210, 166, 122, 0.28) 0%, rgba(210, 166, 122, 0) 60%),
+    linear-gradient(135deg, var(--cream-200) 0%, var(--cream-100) 45%, var(--cream-200) 100%);
+  /* light bands that sit on the cream page */
+  --gradient-sage-band: linear-gradient(160deg, var(--sage-100) 0%, var(--cream-200) 55%, #e6ead9 100%);
+  --gradient-caramel-band: linear-gradient(160deg, var(--caramel-100) 0%, var(--cream-200) 60%, var(--cream-300) 100%);
+  /* Dark brown, never flat: a warm caramel glow top-left, a hint of sage bottom-right,
+     over brown that deepens from #5a2b14 to #36170a. */
+  --gradient-brand:
+    radial-gradient(110% 90% at 0% 0%, rgba(157, 102, 56, 0.42) 0%, rgba(157, 102, 56, 0) 55%),
+    radial-gradient(90% 90% at 100% 100%, rgba(176, 186, 153, 0.2) 0%, rgba(176, 186, 153, 0) 55%),
+    linear-gradient(150deg, var(--brown-800) 0%, var(--brown-900) 45%, var(--brown-950) 100%);
+  --gradient-blossom: linear-gradient(160deg, var(--caramel-100) 0%, var(--cream-100) 45%, var(--sage-100) 100%);
+  --gradient-soft: linear-gradient(180deg, var(--cream-50) 0%, var(--cream-300) 100%);
+  --gradient-sage: linear-gradient(150deg, var(--sage-100) 0%, var(--cream-100) 60%, var(--caramel-100) 100%);
 
   /* --- Spacing (4px base) --- */
   --space-1: 0.25rem;
@@ -117,7 +134,7 @@
   --space-7: 3rem;
   --space-8: 4rem;
   --space-9: 6rem;
-  --section-y: clamp(4rem, 3rem + 4vw, 7rem);
+  --section-y: clamp(3.75rem, 2.5rem + 5vw, 8rem);
 
   /* --- Layout --- */
   --container: 1200px;
@@ -125,21 +142,25 @@
   --container-read: 720px;
   --gutter: clamp(1.25rem, 0.8rem + 2vw, 2rem);
   --nav-height: 72px;
+  --measure: 62ch;
 
   /* --- Radii --- */
   --radius-sm: 6px;
   --radius-md: 12px;
-  --radius-lg: 18px;
-  --radius-xl: 28px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
   --radius-pill: 999px;
 
   /* --- Shadows (soft, warm-neutral) --- */
-  --shadow-xs: 0 1px 2px rgba(21, 34, 56, 0.05);
-  --shadow-sm: 0 2px 10px rgba(21, 34, 56, 0.06);
-  --shadow-md: 0 10px 30px rgba(21, 34, 56, 0.09);
-  --shadow-lg: 0 24px 60px rgba(21, 34, 56, 0.14);
-  --shadow-book: 0 2px 4px rgba(21, 34, 56, 0.12), 0 22px 48px rgba(21, 34, 56, 0.22);
-  --shadow-brand: 0 14px 36px rgba(15, 118, 110, 0.24);
+  --shadow-xs: 0 1px 2px rgba(78, 34, 15, 0.05);
+  --shadow-sm: 0 2px 10px rgba(78, 34, 15, 0.06);
+  --shadow-md: 0 10px 30px rgba(78, 34, 15, 0.09);
+  --shadow-lg: 0 24px 60px rgba(78, 34, 15, 0.14);
+  --shadow-book:
+    0 1px 1px rgba(78, 34, 15, 0.1),
+    0 6px 10px -2px rgba(78, 34, 15, 0.14),
+    0 28px 44px -12px rgba(78, 34, 15, 0.34);
+  --shadow-brand: 0 10px 24px -6px rgba(138, 86, 48, 0.4);
 
   /* --- Motion --- */
   --ease-soft: cubic-bezier(0.22, 0.61, 0.36, 1);
@@ -182,13 +203,17 @@ h4 {
   line-height: var(--lh-heading);
   letter-spacing: var(--ls-tight);
   margin: 0 0 var(--space-4);
-  font-weight: var(--fw-bold);
+  font-weight: 500;
   text-wrap: balance;
 }
 h1 { font-size: var(--text-h1); }
 h2 { font-size: var(--text-h2); }
-h3 { font-size: var(--text-h3); }
-h4 { font-size: var(--text-h4); }
+h3 { font-size: var(--text-h3); font-weight: 600; }
+h4 { font-size: var(--text-h4); font-weight: 600; }
+/* Editorial accent: <em> inside a heading becomes an italic, brand-coloured phrase. */
+h1 em,
+h2 em { font-style: italic; font-weight: 500; color: var(--caramel-700); }
+.on-dark em { color: var(--sage-300); }
 
 p { margin: 0 0 var(--space-5); text-wrap: pretty; }
 
@@ -202,12 +227,12 @@ a:hover { color: var(--text-link-hover); }
 img { max-width: 100%; height: auto; }
 
 :focus-visible {
-  outline: 3px solid var(--plum-500);
+  outline: 3px solid var(--caramel-600);
   outline-offset: 3px;
   border-radius: 4px;
 }
 
-::selection { background: var(--pink-100); color: var(--navy-900); }
+::selection { background: var(--caramel-100); color: var(--brown-900); }
 
 /* ============================================================
    Layout helpers
@@ -252,13 +277,22 @@ img { max-width: 100%; height: auto; }
 
 /* --- Eyebrow / category label --- */
 .eyebrow {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
   font-family: var(--font-sans);
-  font-size: var(--text-xs);
+  font-size: 0.72rem;
   font-weight: var(--fw-bold);
-  letter-spacing: var(--ls-label);
+  letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--accent);
+  color: var(--brand-strong);
+}
+.eyebrow::before {
+  content: "";
+  width: 28px;
+  height: 1px;
+  background: currentColor;
+  opacity: 0.6;
 }
 
 .wordmark {
@@ -322,7 +356,7 @@ img { max-width: 100%; height: auto; }
    ============================================================ */
 .reveal-ready [data-reveal] {
   opacity: 0;
-  transform: translateY(18px);
+  transform: translateY(14px) scale(0.985);
   transition:
     opacity var(--dur-slow) var(--ease-soft),
     transform var(--dur-slow) var(--ease-soft);
@@ -331,6 +365,19 @@ img { max-width: 100%; height: auto; }
 .reveal-ready [data-reveal].is-visible {
   opacity: 1;
   transform: none;
+}
+
+@media (max-width: 640px) {
+  :root {
+    --nav-height: 60px;
+    --text-display: clamp(2rem, 1.6rem + 2vw, 2.4rem);
+    --text-h1: 1.9rem;
+    --text-h2: 1.65rem;
+    --text-h3: 1.25rem;
+    --text-lead: 1.075rem;
+    --section-y: 3.5rem;
+  }
+  body { font-size: 1rem; }
 }
 
 @media (prefers-reduced-motion: reduce) {

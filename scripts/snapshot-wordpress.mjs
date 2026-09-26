@@ -5,7 +5,7 @@
  *   npm run snapshot:wp
  *
  * Writes:
- *   src/content/posts.json: post data in the same shape as the Supabase `posts` table
+ *   src/content/blog/posts.json     : posts in the BlogPost shape (see src/content/types.ts)
  *   public/images/posts/<slug>.<ext>: each post's featured image, served locally
  *
  * Images inside post bodies that live on wp-content are also downloaded and
@@ -82,7 +82,7 @@ async function localiseInlineImages(html) {
 }
 
 await mkdir(INLINE_DIR, { recursive: true });
-await mkdir(path.join(ROOT, "src/content"), { recursive: true });
+await mkdir(path.join(ROOT, "src/content/blog"), { recursive: true });
 
 const raw = await fetchAllPosts();
 const SLUGS = new Set(raw.map((p) => p.slug));
@@ -107,16 +107,15 @@ for (const p of raw) {
     id: p.id,
     slug: p.slug,
     title: stripHtml(p.title?.rendered),
-    content: await localiseInlineImages(p.content?.rendered ?? ""),
-    excerpt: stripHtml(p.excerpt?.rendered).slice(0, 300),
+    date: p.date_gmt ? `${p.date_gmt}Z` : null,
     category: terms.some((n) => n.includes("book")) ? "book-review" : "blog",
-    cover_image_url: cover,
-    cover_image_alt: stripHtml(media?.alt_text || "") || null,
-    published_at: p.date_gmt ? `${p.date_gmt}Z` : null,
+    image: cover ? { src: cover, alt: stripHtml(media?.alt_text || "") } : null,
+    excerpt: stripHtml(p.excerpt?.rendered).slice(0, 300) || null,
+    content: await localiseInlineImages(p.content?.rendered ?? ""),
   });
   console.log("✓", p.slug);
 }
 
-rows.sort((a, b) => (b.published_at ?? "").localeCompare(a.published_at ?? ""));
-await writeFile(path.join(ROOT, "src/content/posts.json"), JSON.stringify(rows, null, 2) + "\n");
-console.log(`\nSaved ${rows.length} posts to src/content/posts.json`);
+rows.sort((a, b) => (b.date ?? "").localeCompare(a.date ?? ""));
+await writeFile(path.join(ROOT, "src/content/blog/posts.json"), JSON.stringify(rows, null, 2) + "\n");
+console.log(`\nSaved ${rows.length} posts to src/content/blog/posts.json`);

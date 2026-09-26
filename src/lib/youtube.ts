@@ -1,4 +1,11 @@
-import { site } from "@/content/site";
+import { author } from "@/content/author";
+
+/** Channel link (from author.social.youtube). null when no channel is set. */
+export const youtubeChannelUrl = author.social.youtube;
+/** Same link with YouTube's "subscribe" prompt. */
+export const youtubeSubscribeUrl = youtubeChannelUrl
+  ? `${youtubeChannelUrl}${youtubeChannelUrl.includes("?") ? "&" : "?"}sub_confirmation=1`
+  : null;
 
 export type Video = {
   id: string;
@@ -22,7 +29,8 @@ const decode = (s: string) =>
  * Cached and refreshed every 6 hours. Returns [] if the feed is unreachable.
  */
 export async function getLatestVideos(limit = 6): Promise<Video[]> {
-  const { channelId, featuredVideoIds, hiddenVideoIds } = site.youtube;
+  const { channelId, featuredVideoIds, hiddenVideoIds } = author.youtube;
+  if (!channelId) return [];
   let videos: Video[] = [];
   try {
     const res = await fetch(`https://www.youtube.com/feeds/videos.xml?channel_id=${channelId}`, {

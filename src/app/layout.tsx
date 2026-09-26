@@ -7,7 +7,7 @@ import { Footer } from "@/components/Footer";
 import { RevealObserver } from "@/components/RevealObserver";
 
 const lato = Lato({ variable: "--font-lato", weight: ["400", "700"], subsets: ["latin"], display: "swap" });
-const playfair = Playfair_Display({ variable: "--font-playfair", weight: ["400", "600", "700"], style: ["normal", "italic"], subsets: ["latin"], display: "swap" });
+const playfair = Playfair_Display({ variable: "--font-playfair", weight: ["400", "500", "600", "700"], style: ["normal", "italic"], subsets: ["latin"], display: "swap" });
 const dancing = Dancing_Script({ variable: "--font-dancing", weight: ["600", "700"], subsets: ["latin"], display: "swap" });
 
 export const metadata: Metadata = {
@@ -32,7 +32,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#0b4f4a",
+  themeColor: "#4e220f",
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

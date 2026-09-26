@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { site } from "@/content/site";
+import { youtubeChannelUrl, youtubeSubscribeUrl } from "@/lib/youtube";
 import type { Video } from "@/lib/youtube";
 import { formatDate } from "@/lib/posts";
 import { SectionHeading } from "@/components/SectionHeading";
@@ -37,9 +37,12 @@ export function YouTubeSection({ videos, headingLevel = "h2", limit = 3 }: { vid
         <SectionHeading
           id="watch-title"
           as={headingLevel}
-          tone="light"
           eyebrow="YouTube"
-          title="Watch & Connect"
+          title={
+            <>
+              Watch &amp; <em>Connect</em>
+            </>
+          }
           intro="Behind-the-scenes moments, book news and words of encouragement from my channel."
         />
         {shown.length > 0 ? (
@@ -55,12 +58,16 @@ export function YouTubeSection({ videos, headingLevel = "h2", limit = 3 }: { vid
           </div>
         )}
         <div className={styles.actions} data-reveal>
-          <Button href={site.youtube.subscribeUrl} external variant="light" size="lg" pill>
-            <Icon name="youtube" size={20} /> Subscribe on YouTube
-          </Button>
-          <Button href={site.social.youtube} external variant="outline-light" size="lg" pill>
-            Visit the channel
-          </Button>
+          {youtubeSubscribeUrl && (
+            <Button href={youtubeSubscribeUrl} external variant="primary" size="lg" pill>
+              <Icon name="youtube" size={20} /> Subscribe on YouTube
+            </Button>
+          )}
+          {youtubeChannelUrl && (
+            <Button href={youtubeChannelUrl} external variant="secondary" size="lg" pill>
+              Visit the channel
+            </Button>
+          )}
         </div>
       </div>
     </section>

@@ -1,3 +1,4 @@
+import { pageSeo } from "@/content/site";
 import { getPostsByCategory } from "@/lib/posts";
 import { pageMetadata, breadcrumbSchema } from "@/lib/seo";
 import { JsonLd } from "@/components/JsonLd";
@@ -10,12 +11,7 @@ import blogStyles from "@/components/BlogCard.module.css";
 
 export const revalidate = 3600;
 
-export const metadata = pageMetadata({
-  title: "Book Reviews & Testimonials",
-  description:
-    "Reader testimonials for Kiddies Daily Devotional, plus Abimbola Olumuyiwa's reviews of the Christian and personal-growth books that have shaped her.",
-  path: "/book-reviews",
-});
+export const metadata = pageMetadata({ ...pageSeo.bookReviews, path: "/book-reviews", absoluteTitle: true });
 
 export default async function BookReviewsPage() {
   const reviews = await getPostsByCategory("book-review");

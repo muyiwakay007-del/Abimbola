@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { type Book, sampleLink } from "@/content/books";
+import { type Book, sampleLink } from "@/lib/books";
 import { SectionHeading } from "@/components/SectionHeading";
 import { BookCover } from "@/components/books/BookCover";
 import { Button } from "@/components/ui/Button";
@@ -75,21 +75,23 @@ export function BookPreview({
           </div>
         )}
 
-        <DevNote>add interior page images to `previewImages` and a `sampleUrl` (PDF or preview link) in src/content/books.ts</DevNote>
+        <DevNote>add interior page images to `previewImages` (and a `sample` link) in src/content/books.ts</DevNote>
 
-        {sample && (
+        {(sample || nextHref) && (
           <div className={styles.cta} data-reveal>
             <div className={styles.ctaRow}>
-              <Button href={sample.url} external={sample.external} variant="accent" size="lg" pill>
-                <Icon name="eye" size={20} /> Read a Sample
-              </Button>
+              {sample && (
+                <Button href={sample.url} external={sample.external} variant="accent" size="lg" pill>
+                  <Icon name="eye" size={20} /> Read a Sample
+                </Button>
+              )}
               {nextHref && (
                 <Button href={nextHref} variant="secondary" size="lg" pill>
                   Choose your volume <Icon name="arrow-right" size={18} />
                 </Button>
               )}
             </div>
-            {!primary.sampleUrl && <p className={styles.ctaNote}>Opens the “Look inside” preview on Amazon.</p>}
+            {sample?.note && <p className={styles.ctaNote}>{sample.note}</p>}
           </div>
         )}
       </div>

@@ -36,18 +36,18 @@
 .secondary { background: transparent; color: var(--brand-strong); border-color: var(--brand); }
 .secondary:hover { background: var(--surface-soft); color: var(--brand-deep); }
 
-.accent { background: var(--accent); color: #fff; box-shadow: 0 12px 30px rgba(142, 69, 133, 0.24); }
+.accent { background: var(--accent); color: #fff; box-shadow: 0 12px 30px rgba(157, 102, 56, 0.24); }
 .accent:hover { background: var(--accent-strong); color: #fff; }
 
 .ghost { background: transparent; color: var(--brand-strong); padding-inline: 0.5rem; }
 .ghost:hover { background: var(--surface-soft); color: var(--brand-deep); }
 
 .light { background: #fff; color: var(--brand-deep); box-shadow: 0 14px 36px rgba(0, 0, 0, 0.18); }
-.light:hover { background: var(--teal-50); color: var(--brand-deep); }
+.light:hover { background: var(--sage-100); color: var(--brand-deep); }
 
 .outline-light { background: rgba(255, 255, 255, 0.06); color: #fff; border-color: rgba(255, 255, 255, 0.7); }
 .outline-light:hover { background: rgba(255, 255, 255, 0.16); color: #fff; border-color: #fff; }
 
-.btn:focus-visible { outline: 3px solid var(--plum-500); outline-offset: 3px; }
+.btn:focus-visible { outline: 3px solid var(--caramel-600); outline-offset: 3px; }
 .light:focus-visible,
 .outline-light:focus-visible { outline-color: #fff; }

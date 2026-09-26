@@ -1,5 +1,5 @@
 .footer {
-  background: var(--surface-brand);
+  background: var(--gradient-brand);
   color: rgba(255, 255, 255, 0.85);
 }
 
@@ -25,7 +25,7 @@
   line-height: 1;
   color: #fff;
 }
-.logo:hover { color: var(--teal-100); }
+.logo:hover { color: var(--sage-200); }
 
 .tagline {
   margin: var(--space-3) 0 var(--space-4);
@@ -33,7 +33,7 @@
   font-weight: 700;
   letter-spacing: var(--ls-label);
   text-transform: uppercase;
-  color: var(--teal-100);
+  color: var(--sage-200);
 }
 .bio {
   max-width: 34ch;

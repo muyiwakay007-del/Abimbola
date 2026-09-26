@@ -1,9 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { site } from "@/content/site";
-import { books, kddVolumes, bookHref } from "@/content/books";
+import { books, kddVolumes, bookHref } from "@/lib/books";
 import { getRecentPosts } from "@/lib/posts";
-import { getLatestVideos } from "@/lib/youtube";
+import { getLatestVideos, youtubeChannelUrl } from "@/lib/youtube";
 import { bookSchema, pageMetadata, personSchema, websiteSchema } from "@/lib/seo";
 import { JsonLd } from "@/components/JsonLd";
 import { Hero } from "@/components/Hero";
@@ -22,16 +22,14 @@ import { Testimonials } from "@/components/Testimonials";
 import { BlogCard } from "@/components/BlogCard";
 import { YouTubeSection } from "@/components/YouTubeSection";
 import { Newsletter } from "@/components/forms/Newsletter";
+import { MusicTeaser } from "@/components/music/MusicTeaser";
 import { Button } from "@/components/ui/Button";
 import blogStyles from "@/components/BlogCard.module.css";
 import styles from "./home.module.css";
 
 export const revalidate = 3600;
 
-export const metadata: Metadata = {
-  ...pageMetadata({ title: site.seo.title, description: site.seo.description, path: "/" }),
-  title: { absolute: site.seo.title },
-};
+export const metadata: Metadata = pageMetadata({ title: site.seo.title, description: site.seo.description, path: "/", absoluteTitle: true, ownImage: true });
 
 export default async function HomePage() {
   const [posts, videos] = await Promise.all([getRecentPosts(3), getLatestVideos(3)]);
@@ -57,7 +55,6 @@ export default async function HomePage() {
           <div className="container">
             <SectionHeading
               id="inside-title"
-              tone="light"
               eyebrow="A day inside the book"
               title="Five parts to every devotional"
               intro="A simple, repeatable rhythm children can follow each day, on their own or with you beside them."
@@ -100,6 +97,9 @@ export default async function HomePage() {
         </div>
       </section>
 
+      {/* Music: another creative expression, kept below the book content */}
+      <MusicTeaser />
+
       {posts.length > 0 && (
         <section className="section" aria-labelledby="journal-title">
           <div className="container">
@@ -107,7 +107,11 @@ export default async function HomePage() {
               id="journal-title"
               align="left"
               eyebrow="The Journal"
-              title="From My Journal"
+              title={
+                <>
+                  From My <em>Journal</em>
+                </>
+              }
               intro="Reflections on faith, growth, and the books that shape me."
               action={
                 <Button href="/blog" variant="secondary" pill>
@@ -117,14 +121,14 @@ export default async function HomePage() {
             />
             <div className={blogStyles.grid}>
               {posts.map((p, i) => (
-                <BlogCard key={p.id} post={p} index={i} />
+                <BlogCard key={p.slug} post={p} index={i} />
               ))}
             </div>
           </div>
         </section>
       )}
 
-      <YouTubeSection videos={videos} />
+      {youtubeChannelUrl && <YouTubeSection videos={videos} />}
 
       {/* Warm closing invitation */}
       <GiftCta />

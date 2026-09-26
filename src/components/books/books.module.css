@@ -1,25 +1,63 @@
-/* ---------- Cover ---------- */
+/* ---------- Book (physical presentation) ---------- */
+.book {
+  position: relative;
+  width: 100%;
+  isolation: isolate;
+  transition: transform var(--dur-slow) var(--ease-soft);
+}
+/* soft contact shadow on the "table" */
+.book::after {
+  content: "";
+  position: absolute;
+  left: 4%;
+  right: -4%;
+  bottom: -7%;
+  height: 12%;
+  border-radius: 50%;
+  background: radial-gradient(closest-side, rgba(78, 34, 15, 0.32), rgba(78, 34, 15, 0));
+  filter: blur(6px);
+  z-index: -2;
+  pointer-events: none;
+}
+/* a sliver of page block showing along the fore-edge and bottom */
+.pages {
+  position: absolute;
+  top: 1.2%;
+  left: 3%;
+  right: -1.6%;
+  bottom: -1.4%;
+  border-radius: 2px 5px 5px 2px;
+  background:
+    repeating-linear-gradient(90deg, #fffcf5 0 1px, #e6dcc6 1px 2px) right / 8px 100% no-repeat,
+    linear-gradient(180deg, #f7f1de, #efe5c9);
+  box-shadow: var(--shadow-book);
+  z-index: -1;
+}
 .cover {
   position: relative;
   width: 100%;
-  border-radius: 6px 10px 10px 6px;
+  height: 100%;
+  border-radius: 2px 5px 5px 2px;
   overflow: hidden;
-  box-shadow: var(--shadow-book);
   background: var(--gray-100);
-  isolation: isolate;
+  box-shadow: 0 1px 2px rgba(78, 34, 15, 0.18);
 }
-/* soft spine highlight for a printed-book feel */
+/* spine crease + a whisper of gloss, printed-book style */
 .cover::after {
   content: "";
   position: absolute;
   inset: 0;
-  background: linear-gradient(90deg, rgba(0, 0, 0, 0.16) 0%, rgba(255, 255, 255, 0.18) 2.2%, rgba(255, 255, 255, 0) 5%, rgba(0, 0, 0, 0) 100%);
+  background:
+    linear-gradient(90deg, rgba(0, 0, 0, 0.2) 0%, rgba(255, 255, 255, 0.22) 1.6%, rgba(255, 255, 255, 0) 4.5%, rgba(0, 0, 0, 0.04) 6%, rgba(0, 0, 0, 0) 9%),
+    linear-gradient(115deg, rgba(255, 255, 255, 0.14) 0%, rgba(255, 255, 255, 0) 35%);
   pointer-events: none;
 }
 .coverImg { display: block; width: 100%; height: 100%; object-fit: cover; }
 
+/* subtle perspective for featured presentations */
+.tilt { transform: perspective(1600px) rotateY(-7deg) rotateX(1.5deg); }
+
 .coverPlaceholder {
-  aspect-ratio: 1 / 1;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -29,8 +67,8 @@
   text-align: center;
   color: #fff;
   background:
-    radial-gradient(80% 60% at 80% 10%, rgba(233, 168, 201, 0.35), transparent 60%),
-    linear-gradient(150deg, var(--teal-800), var(--blue-700) 60%, var(--plum-700));
+    radial-gradient(80% 60% at 80% 10%, rgba(210, 166, 122, 0.35), transparent 60%),
+    linear-gradient(150deg, var(--caramel-800), var(--brown-700) 60%, var(--sage-700));
 }
 .placeholderTitle { font-family: var(--font-serif); font-size: 1.5rem; font-weight: 700; line-height: 1.2; }
 .placeholderAuthor { font-family: var(--font-script); font-size: 1.2rem; opacity: 0.92; }
@@ -69,8 +107,8 @@
   justify-content: center;
 }
 /* covers share a common height so square and portrait books line up */
-.cardCover .cover { width: auto; height: clamp(200px, 22vw, 250px); max-width: 100%; transition: transform var(--dur-base) var(--ease-soft); }
-.card:hover .cardCover .cover { transform: translateY(-3px) rotate(-0.6deg); }
+.cardCover .book { width: auto; height: clamp(200px, 22vw, 250px); max-width: 100%; }
+.card:hover .cardCover .book { transform: translateY(-4px) scale(1.01); }
 .ribbon { position: absolute; top: var(--space-4); left: var(--space-4); z-index: 1; }
 
 .cardBody { display: flex; flex-direction: column; gap: var(--space-2); padding: var(--space-5); flex: 1; }

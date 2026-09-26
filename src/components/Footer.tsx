@@ -1,6 +1,8 @@
 import Link from "next/link";
 import { mainNav, site } from "@/content/site";
-import { bookOrder, bookHref } from "@/content/books";
+import { author } from "@/content/author";
+import { youtubeSubscribeUrl } from "@/lib/youtube";
+import { visibleBooks, bookHref } from "@/lib/books";
 import { SocialLinks } from "@/components/SocialLinks";
 import styles from "./Footer.module.css";
 
@@ -13,8 +15,8 @@ export function Footer() {
           <Link href="/" className={styles.logo}>
             {site.name}
           </Link>
-          <p className={styles.tagline}>{site.tagline}</p>
-          <p className={styles.bio}>{site.shortBio}</p>
+          <p className={styles.tagline}>{author.tagline}</p>
+          <p className={styles.bio}>{author.shortBio}</p>
           <SocialLinks tone="light" />
         </div>
 
@@ -34,10 +36,10 @@ export function Footer() {
         <div className={styles.col}>
           <h2 className={styles.heading}>Books</h2>
           <ul className={styles.list}>
-            {bookOrder.map((b) => (
+            {visibleBooks.map((b) => (
               <li key={b.slug}>
                 <Link href={bookHref(b)} className={styles.link}>
-                  {b.placeholder ? "New book: coming soon" : b.title}
+                  {b.status === "coming-soon" ? `${b.title} (coming soon)` : b.title}
                 </Link>
               </li>
             ))}
@@ -47,11 +49,13 @@ export function Footer() {
         <div className={styles.col}>
           <h2 className={styles.heading}>Connect</h2>
           <ul className={styles.list}>
-            <li>
-              <a href={site.youtube.subscribeUrl} target="_blank" rel="noopener noreferrer" className={styles.link}>
-                Subscribe on YouTube<span className="visually-hidden"> (opens in a new tab)</span>
-              </a>
-            </li>
+            {youtubeSubscribeUrl && (
+              <li>
+                <a href={youtubeSubscribeUrl} target="_blank" rel="noopener noreferrer" className={styles.link}>
+                  Subscribe on YouTube<span className="visually-hidden"> (opens in a new tab)</span>
+                </a>
+              </li>
+            )}
             <li>
               <Link href="/contact" className={styles.link}>
                 Contact

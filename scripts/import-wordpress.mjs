@@ -4,7 +4,7 @@
  *   npm run snapshot:wp   # 1. pull the latest posts + images from WordPress
  *   npm run import:wp     # 2. upsert them into Supabase
  *
- * Posts come from src/content/posts.json (written by snapshot:wp), whose image
+ * Posts come from src/content/blog/posts.json (written by snapshot:wp), whose image
  * paths point at files in /public: so nothing depends on the old WordPress host.
  *
  * Requires NEXT_PUBLIC_SUPABASE_URL and SUPABASE_SERVICE_ROLE_KEY in .env.local
@@ -30,13 +30,27 @@ if (!SUPABASE_URL || !SERVICE_KEY) {
 
 const supabase = createClient(SUPABASE_URL, SERVICE_KEY, { auth: { persistSession: false } });
 
-const posts = JSON.parse(readFileSync(new URL("../src/content/posts.json", import.meta.url), "utf8"));
+const posts = JSON.parse(readFileSync(new URL("../src/content/blog/posts.json", import.meta.url), "utf8"));
+
+// BlogPost (src/content/types.ts) → Supabase `posts` row. Posts without an id get a stable one from their slug.
+const idFromSlug = (slug) => [...slug].reduce((h, c) => (h * 31 + c.charCodeAt(0)) % 2147483647, 7);
+const rows = posts.map((p) => ({
+  id: p.id ?? idFromSlug(p.slug),
+  slug: p.slug,
+  title: p.title,
+  content: p.content,
+  excerpt: p.excerpt,
+  category: p.category,
+  cover_image_url: p.image?.src ?? null,
+  cover_image_alt: p.image?.alt ?? null,
+  published_at: p.date,
+}));
 console.log(`Upserting ${posts.length} posts into Supabase…`);
 
-let { error } = await supabase.from("posts").upsert(posts, { onConflict: "id" });
+let { error } = await supabase.from("posts").upsert(rows, { onConflict: "id" });
 if (error?.message?.includes("cover_image_alt")) {
   // Older schema without the alt-text column (see supabase/migrations/0002_forms.sql).
-  ({ error } = await supabase.from("posts").upsert(posts.map((p) => { const row = { ...p }; delete row.cover_image_alt; return row; }), { onConflict: "id" }));
+  ({ error } = await supabase.from("posts").upsert(rows.map((r) => { const row = { ...r }; delete row.cover_image_alt; return row; }), { onConflict: "id" }));
 }
 if (error) {
   console.error("❌ Supabase upsert failed:", error.message);

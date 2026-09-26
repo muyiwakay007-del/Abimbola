@@ -1,3 +1,4 @@
+import { pageSeo } from "@/content/site";
 import { getAllPosts } from "@/lib/posts";
 import { pageMetadata, breadcrumbSchema } from "@/lib/seo";
 import { JsonLd } from "@/components/JsonLd";
@@ -8,11 +9,7 @@ import { Newsletter } from "@/components/forms/Newsletter";
 
 export const revalidate = 3600;
 
-export const metadata = pageMetadata({
-  title: "Blog",
-  description: "Reflections on faith, personal growth and the books that shape us, from author Abimbola Olumuyiwa.",
-  path: "/blog",
-});
+export const metadata = pageMetadata({ ...pageSeo.blog, path: "/blog", absoluteTitle: true });
 
 export default async function BlogPage() {
   const posts = await getAllPosts();

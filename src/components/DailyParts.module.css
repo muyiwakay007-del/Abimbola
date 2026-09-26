@@ -1,59 +1,71 @@
+/* The five parts of a devotional as an open timeline, no boxes.
+   Desktop: horizontal along a hairline. Mobile: vertical, line on the left. */
 .list {
   position: relative;
   list-style: none;
   margin: 0;
   padding: 0;
   display: grid;
-  gap: var(--space-5);
-  grid-template-columns: repeat(auto-fit, minmax(min(100%, 200px), 1fr));
-  counter-reset: none;
+  gap: var(--space-6) var(--space-5);
+  grid-template-columns: repeat(5, 1fr);
 }
-/* connecting thread between the steps on wide screens */
-@media (min-width: 1100px) {
-  .list { grid-template-columns: repeat(5, 1fr); }
-  .list::before {
-    content: "";
-    position: absolute;
-    top: 44px;
-    left: 10%;
-    right: 10%;
-    height: 2px;
-    background: linear-gradient(90deg, var(--teal-300), var(--mauve-400), var(--teal-300));
-    opacity: 0.55;
-  }
+.list::before {
+  content: "";
+  position: absolute;
+  top: 31px;
+  left: 10%;
+  right: 10%;
+  height: 1px;
+  background: linear-gradient(90deg, rgba(78, 34, 15, 0), rgba(157, 102, 56, 0.35) 12%, rgba(157, 102, 56, 0.35) 88%, rgba(78, 34, 15, 0));
 }
 
-.item {
-  position: relative;
-  text-align: center;
-  padding: var(--space-5) var(--space-4) var(--space-6);
-  background: rgba(255, 255, 255, 0.08);
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  border-radius: var(--radius-lg);
-  transition: background-color var(--dur-base) var(--ease-soft), transform var(--dur-base) var(--ease-soft);
-}
-.item:hover { background: rgba(255, 255, 255, 0.13); transform: translateY(-3px); }
+.item { position: relative; text-align: center; padding: 0 var(--space-2); }
 
 .icon {
   position: relative;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  width: 60px;
-  height: 60px;
-  margin-bottom: var(--space-3);
+  width: 62px;
+  height: 62px;
+  margin-bottom: var(--space-4);
   border-radius: 50%;
-  color: var(--brand-deep);
-  background: linear-gradient(145deg, #fff, var(--teal-100));
-  box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+  color: var(--caramel-700);
+  background: var(--cream-50);
+  box-shadow: 0 0 0 6px rgba(176, 186, 153, 0.25), 0 10px 22px rgba(78, 34, 15, 0.12);
+  transition: transform var(--dur-base) var(--ease-soft);
 }
+.item:hover .icon { transform: translateY(-3px) scale(1.04); }
 .step {
   display: block;
-  font-size: var(--text-xs);
-  font-weight: 700;
-  letter-spacing: var(--ls-label);
-  color: var(--pink-400);
-  margin-bottom: var(--space-1);
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-size: 0.95rem;
+  color: var(--sage-700);
+  margin-bottom: 2px;
 }
-.title { font-size: 1.2rem; color: #fff; margin: 0 0 var(--space-2); }
-.text { margin: 0; font-size: 0.95rem; line-height: 1.6; color: rgba(255, 255, 255, 0.84); }
+.title { font-size: 1.2rem; font-weight: 500; color: var(--text-heading); margin: 0 0 var(--space-2); }
+.text { margin: 0 auto; max-width: 22ch; font-size: 0.95rem; line-height: 1.6; color: var(--text-body); }
+
+@media (max-width: 900px) {
+  .list { grid-template-columns: 1fr; gap: 0; max-width: 520px; margin-inline: auto; }
+  .list::before {
+    top: 20px;
+    bottom: 20px;
+    left: 25px;
+    right: auto;
+    width: 1px;
+    height: auto;
+    background: linear-gradient(180deg, rgba(78, 34, 15, 0), rgba(157, 102, 56, 0.3) 8%, rgba(157, 102, 56, 0.3) 92%, rgba(78, 34, 15, 0));
+  }
+  .item {
+    display: grid;
+    grid-template-columns: 52px 1fr;
+    column-gap: var(--space-4);
+    align-items: start;
+    text-align: left;
+    padding: 0 0 var(--space-5);
+  }
+  .icon { grid-row: span 3; width: 52px; height: 52px; margin: 0; }
+  .text { max-width: none; margin: 0; }
+}

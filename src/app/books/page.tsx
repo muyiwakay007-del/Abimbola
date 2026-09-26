@@ -1,4 +1,5 @@
-import { bookOrder, kddVolumes } from "@/content/books";
+import { pageSeo } from "@/content/site";
+import { visibleBooks, kddVolumes } from "@/lib/books";
 import { pageMetadata, bookSchema, breadcrumbSchema } from "@/lib/seo";
 import { JsonLd } from "@/components/JsonLd";
 import { PageHeader } from "@/components/PageHeader";
@@ -7,12 +8,7 @@ import { VolumeSet } from "@/components/kdd/VolumeSet";
 import { Newsletter } from "@/components/forms/Newsletter";
 import bookStyles from "@/components/books/books.module.css";
 
-export const metadata = pageMetadata({
-  title: "Books",
-  description:
-    "Books by Abimbola Olumuyiwa: Kiddies Daily Devotional Volumes 1 and 2, daily Christian devotionals for children, and Built for More, a guide to living a life of purpose.",
-  path: "/books",
-});
+export const metadata = pageMetadata({ ...pageSeo.books, path: "/books", absoluteTitle: true });
 
 export default function BooksPage() {
   return (
@@ -27,7 +23,7 @@ export default function BooksPage() {
       <section className="section" id="collection" aria-label="All books">
         <div className="container">
           <div className={bookStyles.grid}>
-            {bookOrder.map((b) => (
+            {visibleBooks.map((b) => (
               <BookCard key={b.slug} book={b} headingLevel="h2" />
             ))}
           </div>

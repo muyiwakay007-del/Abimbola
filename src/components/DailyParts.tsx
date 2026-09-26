@@ -1,4 +1,4 @@
-import { kddSeries } from "@/content/books";
+import { kddSeries } from "@/lib/books";
 import { Icon, type IconName } from "@/components/ui/Icon";
 import styles from "./DailyParts.module.css";
 

@@ -1,15 +1,15 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getBook, publishedBooks, bookOrder, kddSeries, kddVolumes, sampleLink } from "@/content/books";
-import { pageMetadata, bookSchema, breadcrumbSchema } from "@/lib/seo";
+import { getBook, publishedBooks, visibleBooks, kddSeries, kddVolumes, sampleLink, purchaseLinks, bookDetails, displayPrice } from "@/lib/books";
+import { pageMetadata, bookSchema, breadcrumbSchema, bookSeo } from "@/lib/seo";
 import { JsonLd } from "@/components/JsonLd";
 import { BookCover } from "@/components/books/BookCover";
 import { BookPurchaseButton } from "@/components/books/BookPurchaseButton";
 import { BookCard } from "@/components/books/BookCard";
 import { BookPreview } from "@/components/books/BookPreview";
 import { SectionHeading } from "@/components/SectionHeading";
-import { FeatureCard, FeatureGrid } from "@/components/FeatureCard";
+import { PerfectFor } from "@/components/kdd/PerfectFor";
 import { DailyParts } from "@/components/DailyParts";
 import { Testimonials } from "@/components/Testimonials";
 import { Button } from "@/components/ui/Button";
@@ -29,22 +29,18 @@ export const dynamicParams = false;
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const book = getBook((await params).slug);
   if (!book) return {};
-  return pageMetadata({
-    title: book.title,
-    description: `${book.title} by ${book.author}. ${book.shortDescription}`,
-    path: `/books/${book.slug}`,
-    type: "book",
-    image: book.cover ? { url: book.cover.src, width: book.cover.width, height: book.cover.height, alt: book.cover.alt } : undefined,
-  });
+  // The share image comes from ./opengraph-image.tsx (branded card with this book's cover).
+  return pageMetadata({ ...bookSeo(book), path: `/books/${book.slug}`, book, ownImage: true });
 }
 
 export default async function BookPage({ params }: Props) {
   const book = getBook((await params).slug);
   if (!book) notFound();
 
-  const isKdd = book.series === kddSeries.name;
+  const isKdd = book.series?.name === kddSeries.name;
+  const links = purchaseLinks(book);
   const sample = sampleLink(book);
-  const related = bookOrder.filter((b) => b.slug !== book.slug);
+  const related = visibleBooks.filter((b) => b.slug !== book.slug);
 
   return (
     <>
@@ -88,7 +84,7 @@ export default async function BookPage({ params }: Props) {
               {isKdd && (
                 <nav className={styles.switcher} aria-label="Volumes in the Kiddies Daily Devotional collection">
                   <span className={styles.switcherLabel}>
-                    Part of the <Link href="/kiddies-daily-devotional">Kiddies Daily Devotional</Link> collection
+                    Part of the <Link href="/books/kiddies-daily-devotional">Kiddies Daily Devotional</Link> collection
                   </span>
                   <ul>
                     {kddVolumes.map((v) => (
@@ -96,9 +92,10 @@ export default async function BookPage({ params }: Props) {
                         <Link
                           href={`/books/${v.slug}`}
                           aria-current={v.slug === book.slug ? "page" : undefined}
-                          className={`${styles.switchItem} ${v.volume === 2 ? styles.switchPlum : ""}`}
+                          className={`${styles.switchItem} ${v.series?.volume === 2 ? styles.switchPlum : ""}`}
                         >
-                          Volume {v.volume} · {kddSeries.volumeRoles[v.volume ?? 0]?.days} days
+                          Volume {v.series?.volume}
+                          {v.devotionalCount ? ` · ${v.devotionalCount} days` : ""}
                         </Link>
                       </li>
                     ))}
@@ -107,20 +104,18 @@ export default async function BookPage({ params }: Props) {
               )}
 
               <div className={styles.priceBox}>
-                {book.formats.length > 0 ? (
+                {book.formats.length > 0 && (
                   <ul className={styles.formats} aria-label="Formats and prices">
                     {book.formats.map((f) => (
                       <li key={f.format}>
                         <span>{f.format}</span>
-                        <strong>{f.price ?? "See Amazon"}</strong>
+                        <strong>{f.price ?? (links[0] ? `See ${links[0].name}` : "Coming soon")}</strong>
                       </li>
                     ))}
                   </ul>
-                ) : (
-                  book.price && <p className={styles.price}>{book.price}</p>
                 )}
                 <div className={styles.buy}>
-                  {book.purchaseLinks.map((l, i) => (
+                  {links.map((l, i) => (
                     <BookPurchaseButton key={l.url} retailer={l.retailer} url={l.url} label={l.label} size="lg" variant={i === 0 ? "primary" : "secondary"} />
                   ))}
                   {sample && (
@@ -129,15 +124,16 @@ export default async function BookPage({ params }: Props) {
                     </Button>
                   )}
                 </div>
-                {!book.sampleUrl && sample && <p className={styles.note}>“Read a Sample” opens Amazon&apos;s Look Inside preview.</p>}
-                {!book.price && <DevNote>add the confirmed price in src/content/books.ts</DevNote>}
+                {sample?.note && <p className={styles.note}>“Read a Sample”: {sample.note}</p>}
+                {!links.length && <p className={styles.note}>Retail links coming soon.</p>}
+                {!displayPrice(book) && <DevNote>add a price under formats in src/content/books.ts</DevNote>}
               </div>
 
               <p className={styles.lede}>{book.shortDescription}</p>
               <ul className={styles.quickFacts}>
                 {isKdd && (
                   <>
-                    <li><Icon name="calendar" size={18} /> {book.details.find((d) => d.label === "Devotionals")?.value ?? "Daily devotionals"}</li>
+                    {book.devotionalCount && <li><Icon name="calendar" size={18} /> {book.devotionalCount} daily devotionals</li>}
                     <li><Icon name="verse" size={18} /> Memory verse every day</li>
                     <li><Icon name="prayer" size={18} /> Daily prayer</li>
                   </>
@@ -173,14 +169,11 @@ export default async function BookPage({ params }: Props) {
           <aside className={styles.detailsCard} data-reveal aria-labelledby="book-details">
             <h2 id="book-details" className={styles.detailsTitle}>Book details</h2>
             <dl className={styles.details}>
-              <div><dt>Author</dt><dd>{book.author}</dd></div>
-              {book.series && <div><dt>Series</dt><dd>{book.series}{book.volume ? `, Volume ${book.volume}` : ""}</dd></div>}
-              {book.details.map((d) => (
+              {bookDetails(book).map((d) => (
                 <div key={d.label}><dt>{d.label}</dt><dd>{d.value}</dd></div>
               ))}
-              {book.isbn && <div><dt>ISBN</dt><dd>{book.isbn}</dd></div>}
             </dl>
-            {!book.isbn && <DevNote>add publisher, publication date, page count and ISBN to `details` / `isbn`</DevNote>}
+            {!book.isbn && <DevNote>add publisher, publicationDate, pages and isbn for this book in src/content/books.ts</DevNote>}
           </aside>
         </div>
       </section>
@@ -190,23 +183,18 @@ export default async function BookPage({ params }: Props) {
           {/* What's inside */}
           <section className={`section ${styles.inside}`} aria-labelledby="inside-title">
             <div className="container">
-              <SectionHeading id="inside-title" tone="light" eyebrow="What's Inside" title="Every devotional includes" />
+              <SectionHeading id="inside-title" eyebrow="What's Inside" title="Every devotional includes" />
               <DailyParts />
             </div>
           </section>
 
-          {/* Who it's for + features */}
-          <section className="section" aria-labelledby="for-title">
-            <div className="container">
-              <SectionHeading id="for-title" eyebrow="Who It's For" title="For every home, classroom and ministry" />
-              <FeatureGrid min={230}>
-                <FeatureCard icon="parents" title="Parents" accent="teal">Help your child build a consistent devotional routine.</FeatureCard>
-                <FeatureCard icon="school" title="Schools" accent="blue" delay={80}>A practical resource for nurturing faith and character.</FeatureCard>
-                <FeatureCard icon="church" title="Churches" accent="plum" delay={160}>A useful resource for children&apos;s ministries and discipleship.</FeatureCard>
-                <FeatureCard icon="heart" title="Families" accent="emerald" delay={240}>Create meaningful moments around God&apos;s Word together.</FeatureCard>
-              </FeatureGrid>
+          <PerfectFor id="for" eyebrow="Who It's For" title="For every home, classroom and ministry" />
 
-              <div className={styles.features} data-reveal>
+          {/* Book features */}
+          <section className="section" aria-label="Book features">
+            <div className="container">
+
+              <div className={styles.features} data-reveal style={{ marginTop: 0 }}>
                 <h3 className={styles.featuresTitle}>Book features</h3>
                 <ul>
                   <li><Icon name="check" size={18} strokeWidth={2.4} /> Short, easy-to-understand daily lessons</li>
@@ -229,10 +217,10 @@ export default async function BookPage({ params }: Props) {
           intro={isKdd ? undefined : `A closer look at ${book.title}.`}
         />
       )}
-      <Testimonials bookSlug={book.slug} bookTitle={book.series ?? book.title} />
+      <Testimonials bookSlug={book.slug} bookTitle={book.series?.name ?? book.title} />
 
       {/* Final CTA */}
-      {book.purchaseLinks[0] && (
+      {links[0] && (
         <section className="section-tight" aria-label={`Buy ${book.title}`}>
           <div className="container">
             <div className={styles.finalCta} data-reveal>
@@ -243,7 +231,7 @@ export default async function BookPage({ params }: Props) {
                 </p>
               </div>
               <div className={styles.buy}>
-                <BookPurchaseButton retailer={book.purchaseLinks[0].retailer} url={book.purchaseLinks[0].url} label={book.purchaseLinks[0].label} variant="light" size="lg" />
+                <BookPurchaseButton retailer={links[0].retailer} url={links[0].url} label={links[0].label} variant="light" size="lg" />
               </div>
             </div>
           </div>

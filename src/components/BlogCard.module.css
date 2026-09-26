@@ -11,7 +11,7 @@
   transition: transform var(--dur-base) var(--ease-soft), box-shadow var(--dur-base) var(--ease-soft);
 }
 .card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
-.card:focus-within { box-shadow: var(--shadow-md), 0 0 0 3px var(--plum-500); }
+.card:focus-within { box-shadow: var(--shadow-md), 0 0 0 3px var(--caramel-600); }
 
 .media { position: relative; aspect-ratio: 16 / 10; overflow: hidden; background: var(--gray-100); }
 .img { object-fit: cover; transition: transform var(--dur-slow) var(--ease-soft); }

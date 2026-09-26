@@ -1,4 +1,5 @@
-import { site } from "@/content/site";
+import { pageSeo } from "@/content/site";
+import { author } from "@/content/author";
 import { pageMetadata, breadcrumbSchema } from "@/lib/seo";
 import { JsonLd } from "@/components/JsonLd";
 import { PageHeader } from "@/components/PageHeader";
@@ -8,11 +9,7 @@ import { Icon } from "@/components/ui/Icon";
 import { DevNote } from "@/components/ui/DevNote";
 import styles from "./contact.module.css";
 
-export const metadata = pageMetadata({
-  title: "Contact",
-  description: "Get in touch with Abimbola Olumuyiwa about Kiddies Daily Devotional, group orders for schools and churches, events or media.",
-  path: "/contact",
-});
+export const metadata = pageMetadata({ ...pageSeo.contact, path: "/contact", absoluteTitle: true });
 
 type Props = { searchParams: Promise<{ topic?: string }> };
 
@@ -35,19 +32,21 @@ export default async function ContactPage({ searchParams }: Props) {
           <aside className={styles.aside} aria-label="Other ways to connect">
             <div className={styles.infoCard}>
               <h2 className={styles.h3}>Other ways to connect</h2>
-              {site.contactEmail ? (
+              {author.email ? (
                 <p className={styles.row}>
-                  <Icon name="mail" /> <a href={`mailto:${site.contactEmail}`}>{site.contactEmail}</a>
+                  <Icon name="mail" /> <a href={`mailto:${author.email}`}>{author.email}</a>
                 </p>
               ) : (
                 <DevNote>add your email in src/content/site.ts → contactEmail</DevNote>
               )}
+              {author.social.youtube && (
               <p className={styles.row}>
                 <Icon name="youtube" />
-                <a href={site.social.youtube} target="_blank" rel="noopener noreferrer">
+                <a href={author.social.youtube} target="_blank" rel="noopener noreferrer">
                   YouTube channel<span className="visually-hidden"> (opens in a new tab)</span>
                 </a>
               </p>
+              )}
               <div style={{ marginTop: "var(--space-4)" }}>
                 <SocialLinks />
               </div>

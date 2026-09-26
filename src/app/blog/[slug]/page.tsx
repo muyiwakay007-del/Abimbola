@@ -23,15 +23,8 @@ export async function generateStaticParams() {
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const post = await getPostBySlug((await params).slug);
   if (!post) return {};
-  return {
-    ...pageMetadata({
-      title: post.title,
-      description: excerptOf(post, 155),
-      path: `/blog/${post.slug}`,
-      type: "article",
-      image: post.cover_image_url ? { url: post.cover_image_url, alt: post.cover_image_alt ?? post.title } : undefined,
-    }),
-  };
+  // The share image comes from ./opengraph-image.tsx (branded card with the post title).
+  return pageMetadata({ title: post.title, description: excerptOf(post, 158), path: `/blog/${post.slug}`, article: { publishedTime: post.date }, ownImage: true });
 }
 
 export default async function PostPage({ params }: Props) {
@@ -55,9 +48,9 @@ export default async function PostPage({ params }: Props) {
         ]}
       />
       <article className={styles.article}>
-        <div className={styles.cover} style={post.cover_image_url ? undefined : { background: "var(--gradient-hero)" }}>
-          {post.cover_image_url && (
-            <Image src={post.cover_image_url} alt={post.cover_image_alt ?? ""} fill preload sizes="100vw" className={styles.coverImg} />
+        <div className={styles.cover} style={post.image?.src ? undefined : { background: "var(--gradient-hero)" }}>
+          {post.image?.src && (
+            <Image src={post.image?.src} alt={post.image?.alt ?? ""} fill preload sizes="100vw" className={styles.coverImg} />
           )}
           <div className={styles.coverShade} aria-hidden="true" />
         </div>
@@ -69,7 +62,7 @@ export default async function PostPage({ params }: Props) {
             </Link>
             <div className={styles.meta}>
               <Badge tone="accent">{categoryLabel(post.category)}</Badge>
-              {post.published_at && <time dateTime={post.published_at}>{formatDate(post.published_at)}</time>}
+              {post.date && <time dateTime={post.date}>{formatDate(post.date)}</time>}
               <span aria-hidden="true">·</span>
               <span>{readingMinutes(post.content)} min read</span>
             </div>

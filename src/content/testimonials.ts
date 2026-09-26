@@ -15,14 +15,9 @@
  *  to share their experience instead of any made-up reviews.
  */
 
-export type Testimonial = {
-  quote: string;
-  name: string;
-  role: string;
-  image?: string | null;
-  rating?: number | null;
-  bookSlug?: string | null;
-};
+import type { Testimonial } from "./types";
+
+export type { Testimonial };
 
 export const testimonials: Testimonial[] = [
   // {

@@ -1,5 +1,7 @@
 import Link from "next/link";
-import { kddSeries, kddVolumes, bookHref } from "@/content/books";
+import { kddSeries, kddVolumes, kddQuickFacts, bookHref, type Book } from "@/lib/books";
+
+const volumeChip = (b: Book) => `Volume ${b.series?.volume ?? ""}${b.devotionalCount ? ` · ${b.devotionalCount} days` : ""}`;
 import { BookCover } from "@/components/books/BookCover";
 import { Button } from "@/components/ui/Button";
 import { Icon, type IconName } from "@/components/ui/Icon";
@@ -24,7 +26,7 @@ export function KddDiscover({
   headingLevel = "h2",
   buyHref = "#buy",
   sampleHref = "#preview",
-  learnHref = "/kiddies-daily-devotional",
+  learnHref = "/books/kiddies-daily-devotional",
   step,
 }: {
   id?: string;
@@ -47,12 +49,12 @@ export function KddDiscover({
         <div className={styles.stage} data-reveal>
           <div className={styles.glow} aria-hidden="true" />
           <Link href={bookHref(v1)} className={`${styles.book} ${styles.bookOne}`} aria-label={`${v1.title}: details`}>
-            <BookCover book={v1} sizes="(max-width: 900px) 55vw, 340px" preload />
-            <span className={`${styles.chip} ${styles.chipTeal}`}>Volume 1 · 183 days</span>
+            <BookCover book={v1} sizes="(max-width: 900px) 55vw, 340px" preload tilt />
+            <span className={`${styles.chip} ${styles.chipTeal}`}>{volumeChip(v1)}</span>
           </Link>
           <Link href={bookHref(v2)} className={`${styles.book} ${styles.bookTwo}`} aria-label={`${v2.title}: details`}>
-            <BookCover book={v2} sizes="(max-width: 900px) 55vw, 340px" preload />
-            <span className={`${styles.chip} ${styles.chipPlum}`}>Volume 2 · 182 days</span>
+            <BookCover book={v2} sizes="(max-width: 900px) 55vw, 340px" preload tilt />
+            <span className={`${styles.chip} ${styles.chipPlum}`}>{volumeChip(v2)}</span>
           </Link>
         </div>
 
@@ -103,7 +105,7 @@ export function KddDiscover({
           </div>
 
           <p className={styles.facts}>
-            {kddSeries.quickFacts.map((f, i) => (
+            {kddQuickFacts().map((f, i) => (
               <span key={f}>
                 {i > 0 && <span aria-hidden="true"> · </span>}
                 {f}

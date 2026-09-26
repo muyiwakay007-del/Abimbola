@@ -1,5 +1,6 @@
 import Link from "next/link";
-import { type Book, bookHref, primaryPurchase, sampleLink } from "@/content/books";
+import { type Book, bookHref, primaryPurchase, sampleLink, displayPrice } from "@/lib/books";
+import { BookPrice } from "@/components/books/BookPrice";
 import { BookCover } from "@/components/books/BookCover";
 import { BookPurchaseButton } from "@/components/books/BookPurchaseButton";
 import { Button } from "@/components/ui/Button";
@@ -16,7 +17,7 @@ export function BookActions({
 }: {
   book: Book;
   size?: "sm" | "md" | "lg";
-  /** Short labels ("Buy Now", "Read Sample") vs. full ("Buy on Amazon", "Look Inside on Amazon"). */
+  /** Short label ("Buy Now") vs. retailer label ("Buy on Amazon"). */
   short?: boolean;
   showDetails?: boolean;
 }) {
@@ -38,7 +39,7 @@ export function BookActions({
       {buy && <BookPurchaseButton retailer={buy.retailer} url={buy.url} label={short ? "Buy Now" : buy.label} size={size} />}
       {sample && (
         <Button href={sample.url} external={sample.external} variant="secondary" size={size} pill>
-          {short ? "Read a Sample" : sample.label}
+          Read a Sample
         </Button>
       )}
       {showDetails && (
@@ -73,21 +74,10 @@ export function BookCard({ book, headingLevel = "h3" }: { book: Book; headingLev
         </Heading>
         <p className={styles.cardAuthor}>by {book.author}</p>
         <p className={styles.cardText}>{book.shortDescription}</p>
-        {book.status === "available" && (
-          <p className={styles.price}>
-            {book.price ? (
-              <>
-                {book.price}
-                {book.formats.length > 1 && <span className={styles.priceNote}> · {book.formats.map((f) => f.format).join(" & ")}</span>}
-              </>
-            ) : (
-              <span className={styles.priceNote}>See price on Amazon</span>
-            )}
-          </p>
-        )}
+        <BookPrice book={book} />
         <BookActions book={book} size="sm" />
-        {book.placeholder && <DevNote>fill in this book&apos;s details in src/content/books.ts</DevNote>}
-        {!book.placeholder && !book.price && <DevNote>add the confirmed price for {book.shortTitle} in src/content/books.ts</DevNote>}
+        {book.status === "coming-soon" && <DevNote>fill in this book&apos;s details in src/content/books.ts</DevNote>}
+        {book.status === "available" && !displayPrice(book) && <DevNote>add a price for {book.shortTitle} under formats in src/content/books.ts</DevNote>}
       </div>
     </article>
   );

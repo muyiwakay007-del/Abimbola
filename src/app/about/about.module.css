@@ -9,3 +9,9 @@
 .themes ul { display: flex; flex-wrap: wrap; gap: var(--space-2); list-style: none; margin: 0; padding: 0; }
 .themes li { padding: 6px 14px; font-size: var(--text-sm); color: var(--brand-strong); background: var(--surface-soft); border-radius: var(--radius-pill); }
 .actions { display: flex; flex-wrap: wrap; gap: var(--space-3); margin-top: var(--space-6); }
+
+/* "My story": comfortable measure and clear paragraph separation */
+.story { max-width: 62ch; }
+.story p { margin: 0 0 var(--space-5); }
+.story p:last-child { margin-bottom: 0; }
+.story :global(.lead) { color: var(--text-heading); }

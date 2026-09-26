@@ -30,7 +30,7 @@
   padding: 4px 8px;
   border-radius: 6px;
 }
-.quoteMark { color: var(--mauve-400); }
+.quoteMark { color: var(--sage-300); }
 .quote { margin: 0; flex: 1; font-family: var(--font-serif); font-size: 1.1rem; line-height: 1.6; color: var(--text-heading); }
 .quote p { margin: 0; }
 .person { display: flex; align-items: center; gap: var(--space-3); }
