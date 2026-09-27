@@ -5,6 +5,8 @@
 
 const TO = 'contact@abimbolaolumuyiwa.com';
 const FROM = 'Abimbola Olumuyiwa website <noreply@abimbolaolumuyiwa.com>';
+// Envelope sender on our own domain, so the SPF pass counts for abimbolaolumuyiwa.com.
+const ENVELOPE_FROM = 'noreply@abimbolaolumuyiwa.com';
 // Keep in sync with contactTopics in src/content/site.ts.
 const TOPICS = ['General', 'Book order or bulk purchase', 'School or church', 'Speaking or event', 'Review', 'Media'];
 const MAX_PER_HOUR = 5;
@@ -61,7 +63,7 @@ $headers = implode("\r\n", [
   'Content-Transfer-Encoding: 8bit',
 ]);
 
-if (!mail(TO, $subject, $text, $headers)) {
+if (!mail(TO, $subject, $text, $headers, '-f' . ENVELOPE_FROM)) {
   error_log('[contact] mail() failed');
   reply(502, ['error' => 'provider_error']);
 }
