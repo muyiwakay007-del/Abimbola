@@ -35,9 +35,9 @@ export function Hero() {
               />
             )}
             <p>
-              I&apos;m <strong className={styles.name}>Abimbola Olumuyiwa</strong>
+              <strong className={styles.name}>Abimbola Olumuyiwa</strong>
               <span>
-                Wife, mum, author, songwriter
+                Wife, mum, author, songwriter.
               </span>
             </p>
           </div>
