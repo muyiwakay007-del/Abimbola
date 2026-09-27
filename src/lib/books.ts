@@ -69,6 +69,8 @@ export const primaryPurchase = (b: Book): PurchaseLink | null => purchaseLinks(b
 /** "Read a Sample" target, or null when the book has no sample (hides the button). */
 export function sampleLink(b: Book): { url: string; external: boolean; note: string | null } | null {
   if (!b.sample) return null;
+  // The interior pages in the book page's "Peek Inside" section.
+  if (b.sample.kind === "preview") return b.previewImages.length ? { url: `${bookHref(b)}/#preview`, external: false, note: null } : null;
   if (b.sample.kind === "amazon-look-inside") {
     // Reuses the Amazon link, so there's only one URL to keep up to date.
     return b.retailers.amazon ? { url: b.retailers.amazon, external: true, note: "Opens Amazon's “Look inside” preview." } : null;

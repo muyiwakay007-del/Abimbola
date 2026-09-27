@@ -11,7 +11,7 @@ Everything important about the site lives in this folder. You never need to touc
 | A book's title, subtitle, description, cover | `books.ts` | that book's entry |
 | A price | `books.ts` | `formats` → `price` |
 | Amazon / Barnes & Noble / Apple Books / other links | `books.ts` | `retailers` |
-| The "Read a Sample" link | `books.ts` | `sample`: `{ kind: "amazon-look-inside" }` (uses the Amazon link), `{ kind: "pdf", url }` or `{ kind: "link", url }` |
+| The "Read a Sample" link | `books.ts` | `sample`: `{ kind: "preview" }` (opens the book's own interior pages from `previewImages`), `{ kind: "amazon-look-inside" }` (uses the Amazon link), `{ kind: "pdf", url }` or `{ kind: "link", url }` |
 | "Peek Inside" images | `books.ts` | `previewImages` |
 | ISBN, publisher, publication date, pages | `books.ts` | `isbn`, `publisher`, `publicationDate`, `pages` |
 | Show / hide a book, or the order of books | `books.ts` | `visible`, and `bookOrder` at the bottom |

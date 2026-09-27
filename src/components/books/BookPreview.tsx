@@ -33,7 +33,7 @@ export function BookPreview({
 }) {
   const images = books.flatMap((b) => b.previewImages.map((img) => ({ ...img, book: b })));
   const primary = books[0];
-  const sample = sampleLink(primary);
+  const sample = primary.sample?.kind === "preview" ? null : sampleLink(primary);
 
   return (
     <section className={`section ${styles.section}`} id={id} data-step={step} aria-labelledby={`${id}-title`}>

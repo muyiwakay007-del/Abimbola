@@ -63,7 +63,7 @@ export const books = {
       bookshop: null,
       other: [],
     },
-    sample: { kind: "amazon-look-inside" }, // uses retailers.amazon
+    sample: { kind: "preview" }, // opens the interior pages in previewImages
     previewImages: [
       {
         src: "/images/books/kiddies-daily-devotional-volume-1-back.jpg",
@@ -123,7 +123,7 @@ export const books = {
       bookshop: null,
       other: [],
     },
-    sample: { kind: "amazon-look-inside" }, // uses retailers.amazon
+    sample: { kind: "preview" }, // opens the interior pages in previewImages
     previewImages: [
       {
         src: "/images/books/kiddies-daily-devotional-volume-2-back.jpg",

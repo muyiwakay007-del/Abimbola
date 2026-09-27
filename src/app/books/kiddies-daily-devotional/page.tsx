@@ -256,7 +256,7 @@ export default function KddLandingPage() {
           <DevNote>add real interior page images to `previewImages` in src/content/books.ts; the placeholders disappear as you add them</DevNote>
           <div className={styles.peekCtas} data-reveal>
             {kddVolumes.map((b) => {
-              const sample = sampleLink(b);
+              const sample = b.sample?.kind === "preview" ? null : sampleLink(b);
               return (
                 sample && (
                   <Button key={b.slug} href={sample.url} external={sample.external} variant="secondary" pill>

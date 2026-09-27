@@ -91,11 +91,12 @@ export type Retailers = {
 
 /**
  * Where "Read a Sample" goes:
+ *   { kind: "preview" }                       the book's own "Peek Inside" pages on this site (previewImages)
  *   { kind: "amazon-look-inside" }            uses the book's Amazon link (retailers.amazon)
  *   { kind: "pdf",  url: "/samples/v1.pdf" }  a PDF you put in /public/samples
  *   { kind: "link", url: "https://…" }        any other preview page
  */
-export type BookSample = { kind: "amazon-look-inside" } | { kind: "pdf" | "link"; url: string };
+export type BookSample = { kind: "preview" } | { kind: "amazon-look-inside" } | { kind: "pdf" | "link"; url: string };
 
 export type Book = {
   /** URL segment: the book's page is /books/<slug>. Must be unique. */
