@@ -37,14 +37,6 @@ export default function ContactPage() {
               ) : (
                 <DevNote>add your email in src/content/site.ts → contactEmail</DevNote>
               )}
-              {author.social.youtube && (
-              <p className={styles.row}>
-                <Icon name="youtube" />
-                <a href={author.social.youtube} target="_blank" rel="noopener noreferrer">
-                  YouTube channel<span className="visually-hidden"> (opens in a new tab)</span>
-                </a>
-              </p>
-              )}
               <div style={{ marginTop: "var(--space-4)" }}>
                 <SocialLinks />
               </div>

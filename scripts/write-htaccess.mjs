@@ -13,6 +13,13 @@ const lines = [
   '<FilesMatch "^apple-icon$">',
   "  ForceType image/png",
   "</FilesMatch>",
+  // Pages and their data files must be rechecked on every visit, or browsers
+  // keep showing an old copy after a deploy. Hashed _next/static files can cache.
+  "<IfModule mod_headers.c>",
+  '  <FilesMatch "\\.(html|txt|xml)$">',
+  '    Header set Cache-Control "no-cache"',
+  "  </FilesMatch>",
+  "</IfModule>",
   "RewriteEngine On",
   // One hop to https://www., the canonical host in src/content/site.ts.
   "RewriteCond %{HTTPS} off [OR]",
