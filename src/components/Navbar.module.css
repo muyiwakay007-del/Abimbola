@@ -67,22 +67,8 @@
 .link:focus-visible,
 .logo:focus-visible,
 .toggle:focus-visible,
-.cta:focus-visible,
-.panelLink:focus-visible,
-.panelCta:focus-visible { outline-color: var(--caramel-600); }
+.panelLink:focus-visible { outline-color: var(--caramel-600); }
 
-.cta {
-  display: none;
-  padding: 0.6rem 1.15rem;
-  border-radius: var(--radius-pill);
-  background: var(--brand);
-  color: #fff;
-  font-size: var(--text-sm);
-  font-weight: 700;
-  white-space: nowrap;
-  transition: background-color var(--dur-fast) var(--ease-soft), transform var(--dur-fast) var(--ease-soft);
-}
-.cta:hover { background: var(--brand-strong); color: #fff; transform: translateY(-1px); }
 
 .toggle {
   display: inline-flex;
@@ -129,30 +115,12 @@
 .panelLink:hover { color: var(--caramel-700); }
 .panelLink[aria-current="page"] { color: var(--caramel-700); }
 
-.panelCta {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.5rem;
-  margin-top: var(--space-6);
-  padding: 1rem;
-  border-radius: var(--radius-pill);
-  background: var(--brand);
-  color: #fff;
-  font-weight: 700;
-}
-.panelCta:hover { color: #fff; background: var(--brand-strong); }
 
 @media (min-width: 1120px) {
-  .links,
-  .cta { display: flex; }
+  .links { display: flex; }
   .toggle,
   .panel { display: none !important; }
 }
-@media (min-width: 640px) and (max-width: 1119px) {
-  .cta { display: inline-flex; }
-}
-
 @media (max-width: 640px) {
   /* Blur is weak on phones; a solid bar keeps content from showing through. */
   .header { background: var(--cream-200); backdrop-filter: none; -webkit-backdrop-filter: none; }

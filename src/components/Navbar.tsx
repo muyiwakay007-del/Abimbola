@@ -80,10 +80,6 @@ export function Navbar() {
           ))}
         </ul>
 
-        <Link href="/books" className={styles.cta}>
-          Explore the Books
-        </Link>
-
         <button
           ref={toggleRef}
           type="button"
@@ -112,9 +108,6 @@ export function Navbar() {
             </li>
           ))}
         </ul>
-        <Link href="/books" className={styles.panelCta}>
-          Explore the Books <Icon name="arrow-right" size={18} />
-        </Link>
       </div>
     </header>
   );
