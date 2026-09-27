@@ -30,3 +30,5 @@ export default async function AppleIcon() {
     { ...size, fonts: [{ name: "Playfair", data: serif, weight: 600, style: "normal" }] }
   );
 }
+
+export const dynamic = "force-static";

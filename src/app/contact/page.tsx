@@ -1,3 +1,4 @@
+import { Suspense } from "react";
 import { pageSeo } from "@/content/site";
 import { author } from "@/content/author";
 import { pageMetadata, breadcrumbSchema } from "@/lib/seo";
@@ -11,12 +12,7 @@ import styles from "./contact.module.css";
 
 export const metadata = pageMetadata({ ...pageSeo.contact, path: "/contact", absoluteTitle: true });
 
-type Props = { searchParams: Promise<{ topic?: string }> };
-
-export default async function ContactPage({ searchParams }: Props) {
-  const { topic } = await searchParams;
-  const initialTopic = topic === "review" ? "Review" : topic;
-
+export default function ContactPage() {
   return (
     <>
       <JsonLd data={breadcrumbSchema([{ name: "Home", path: "/" }, { name: "Contact", path: "/contact" }])} />
@@ -26,7 +22,9 @@ export default async function ContactPage({ searchParams }: Props) {
         <div className={`container ${styles.grid}`}>
           <div className={styles.formCard}>
             <h2 className={styles.h2}>Send a message</h2>
-            <ContactForm initialTopic={initialTopic} />
+            <Suspense>
+              <ContactForm />
+            </Suspense>
           </div>
 
           <aside className={styles.aside} aria-label="Other ways to connect">

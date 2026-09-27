@@ -23,11 +23,14 @@ export function useFormSubmit(endpoint: string) {
     setStatus({ state: "submitting" });
     try {
       const res = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
-      if (res.ok) {
+      // Only a JSON { ok: true } from a form handler counts as sent. On static hosting
+      // there is no handler, and Bluehost answers POSTs with the 404 page and a 200 status.
+      const body = await res.json().catch(() => null);
+      if (res.ok && body?.ok) {
         setStatus({ state: "success" });
         return true;
       }
-      const { error } = await res.json().catch(() => ({ error: "" }));
+      const error = body?.error ?? "not_configured";
       setStatus({ state: "error", message: messages[error] ?? "Something went wrong. Please try again in a moment." });
     } catch {
       setStatus({ state: "error", message: "We couldn't reach the server. Please check your connection and try again." });

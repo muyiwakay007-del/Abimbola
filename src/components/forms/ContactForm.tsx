@@ -1,14 +1,17 @@
 "use client";
 
 import { useId, useState, type FormEvent } from "react";
+import { useSearchParams } from "next/navigation";
 import { contactTopics } from "@/content/site";
 import { useFormSubmit, EMAIL_RE } from "./useFormSubmit";
 import styles from "./forms.module.css";
 
 type Errors = Partial<Record<"name" | "email" | "message", string>>;
 
-/** Contact form. Server handler: src/app/api/contact/route.ts */
-export function ContactForm({ initialTopic }: { initialTopic?: string }) {
+/** Contact form. Server handler: src/lib/forms.ts (needs a server; see useFormSubmit). */
+export function ContactForm() {
+  const topic = useSearchParams().get("topic") ?? undefined;
+  const initialTopic = topic === "review" ? "Review" : topic;
   const uid = useId();
   const { status, submit } = useFormSubmit("/api/contact");
   const [errors, setErrors] = useState<Errors>({});

@@ -7,3 +7,5 @@ export const contentType = OG_CONTENT_TYPE;
 export default function Image() {
   return kddCard();
 }
+
+export const dynamic = "force-static";

@@ -6,7 +6,7 @@ import styles from "./forms.module.css";
 
 type Errors = Partial<Record<"name" | "email", string>>;
 
-/** "Stay Connected" newsletter sign-up. Server handler: src/app/api/newsletter/route.ts */
+/** "Stay Connected" newsletter sign-up. Server handler: src/lib/forms.ts (needs a server; see useFormSubmit) */
 export function Newsletter({ id = "newsletter" }: { id?: string }) {
   const uid = useId();
   const { status, submit } = useFormSubmit("/api/newsletter");

@@ -7,3 +7,5 @@ export const contentType = OG_CONTENT_TYPE;
 export default function Image() {
   return authorCard();
 }
+
+export const dynamic = "force-static";
