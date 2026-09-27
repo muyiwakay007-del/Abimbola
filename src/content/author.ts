@@ -15,7 +15,7 @@ export const author: Author = {
   firstName: "Abimbola",
   tagline: "Evolving • Impacting",
 
-  shortBio: "Author of Kiddies Daily Devotional. A mum writing to help children and families grow in faith, one day at a time.",
+  shortBio: "Helping young people and families thrive in faith one day at a time.",
 
   intro:
     "I'm a mum, a writer, and the author of Kiddies Daily Devotional. I wrote it because I wanted my own children to have a structured guide for their faith journey, something that would help shape their worldview and mindset from an early age.",
