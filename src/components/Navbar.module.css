@@ -152,3 +152,8 @@
 @media (min-width: 640px) and (max-width: 1119px) {
   .cta { display: inline-flex; }
 }
+
+@media (max-width: 640px) {
+  /* Blur is weak on phones; a solid bar keeps content from showing through. */
+  .header { background: var(--cream-200); backdrop-filter: none; -webkit-backdrop-filter: none; }
+}

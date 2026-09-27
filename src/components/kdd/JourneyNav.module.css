@@ -67,4 +67,5 @@
   .num { width: 24px; height: 24px; font-size: 0.72rem; }
   .arrow { margin-inline: 0; margin-bottom: 14px; }
   .active { background: transparent; }
+  .bar { background: var(--cream-200); backdrop-filter: none; -webkit-backdrop-filter: none; }
 }

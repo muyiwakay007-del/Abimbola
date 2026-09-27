@@ -28,7 +28,7 @@ export default function AboutPage() {
             <h2 className={styles.h2}>My story</h2>
             <div className={`prose ${styles.story}`}>
               {author.myStory.map((p, i) => (
-                <p key={i} className={i === 0 ? "lead" : undefined}>
+                <p key={i}>
                   {p}
                 </p>
               ))}

@@ -72,6 +72,13 @@ export const books = {
         height: 600,
         caption: "Back cover with interior illustrations",
       },
+      {
+        src: "/images/books/kiddies-daily-devotional-volume-1-pages-2-3.jpg",
+        alt: "Pages 2 and 3 of Kiddies Daily Devotional Volume 1: devotionals on Matthew 6:9 and Genesis 1:1, each with a short reading, an illustration of children praying or of God holding the earth, and a prayer",
+        width: 1600,
+        height: 712,
+        caption: "Pages 2 and 3",
+      },
     ],
   },
 
@@ -124,6 +131,13 @@ export const books = {
         width: 1200,
         height: 1200,
         caption: "Back cover with interior illustrations",
+      },
+      {
+        src: "/images/books/kiddies-daily-devotional-volume-2-pages-38-39.jpg",
+        alt: "Pages 38 and 39 of Kiddies Daily Devotional Volume 2: devotionals on John 17:12 and 1 John 3:1, each with a short reading, an illustration of a smiling child in light, and a prayer",
+        width: 1600,
+        height: 719,
+        caption: "Pages 38 and 39",
       },
     ],
   },

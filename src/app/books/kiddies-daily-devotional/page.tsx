@@ -252,7 +252,7 @@ export default function KddLandingPage() {
             title="Peek Inside"
             intro="The back covers of both volumes show illustrations from inside the book. Tap an image to view it larger."
           />
-          <PeekInside images={previewImages} placeholderSlots={Math.min(3, Math.max(0, 5 - previewImages.length))} />
+          <PeekInside images={previewImages} placeholderSlots={Math.max(0, 3 - previewImages.length)} />
           <DevNote>add real interior page images to `previewImages` in src/content/books.ts; the placeholders disappear as you add them</DevNote>
           <div className={styles.peekCtas} data-reveal>
             {kddVolumes.map((b) => {

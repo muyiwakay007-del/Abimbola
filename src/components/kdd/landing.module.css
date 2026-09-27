@@ -268,3 +268,11 @@
   .retailer { padding: var(--space-5); }
   .storyQuote p { font-size: 1.2rem; }
 }
+
+@media (max-width: 560px) {
+  .compare { min-width: 0; font-size: 0.875rem; }
+  .compare th,
+  .compare td { padding: 0.65rem var(--space-3); }
+  .compareCaption { padding: var(--space-4) var(--space-3); }
+  .compare thead th { font-size: 1rem; }
+}

@@ -8,12 +8,12 @@ import styles from "./forms.module.css";
 
 type Errors = Partial<Record<"name" | "email" | "message", string>>;
 
-/** Contact form. Server handler: src/lib/forms.ts (needs a server; see useFormSubmit). */
+/** Contact form. Server handler: public/api/contact.php (runs on Bluehost). */
 export function ContactForm() {
   const topic = useSearchParams().get("topic") ?? undefined;
   const initialTopic = topic === "review" ? "Review" : topic;
   const uid = useId();
-  const { status, submit } = useFormSubmit("/api/contact");
+  const { status, submit } = useFormSubmit("/api/contact.php");
   const [errors, setErrors] = useState<Errors>({});
   const defaultTopic = (contactTopics as readonly string[]).includes(initialTopic ?? "") ? initialTopic : "General";
 

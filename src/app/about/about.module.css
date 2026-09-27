@@ -14,4 +14,3 @@
 .story { max-width: 62ch; }
 .story p { margin: 0 0 var(--space-5); }
 .story p:last-child { margin-bottom: 0; }
-.story :global(.lead) { color: var(--text-heading); }

@@ -38,3 +38,8 @@
   border-top: 1px solid var(--border-subtle);
 }
 .signature { font-family: var(--font-script); font-size: 2rem; color: var(--brand); }
+
+@media (max-width: 560px) {
+  /* Give the reading column more of the screen. */
+  .card { padding: var(--space-5) var(--space-4); border-radius: var(--radius-lg); }
+}

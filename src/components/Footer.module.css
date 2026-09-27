@@ -7,15 +7,15 @@
   display: grid;
   gap: var(--space-7) var(--space-6);
   padding-block: var(--space-8) var(--space-7);
-  grid-template-columns: 1fr;
+  grid-template-columns: 1fr 1fr;
 }
-@media (min-width: 640px) {
-  .grid { grid-template-columns: 1fr 1fr; }
-  .brand { grid-column: 1 / -1; }
-}
+.brand { grid-column: 1 / -1; }
+/* Two columns: Explore on the left, Books and Connect stacked on the right. */
+nav.col { grid-row: span 2; }
 @media (min-width: 1000px) {
   .grid { grid-template-columns: 1.6fr 1fr 1.3fr 1fr; }
   .brand { grid-column: auto; }
+  nav.col { grid-row: auto; }
 }
 
 .logo {

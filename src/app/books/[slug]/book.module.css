@@ -119,3 +119,10 @@
 .switchPlum { --vol: var(--sage-700); }
 .switchItem:hover { color: var(--vol); background: var(--surface-soft); }
 .switchItem[aria-current="page"] { color: #fff; background: var(--vol); }
+
+@media (max-width: 560px) {
+  /* Cover shouldn't fill the whole screen; formats sit side by side; buy buttons go full width. */
+  .coverCol { width: min(72%, 300px); }
+  .formats li { flex: 1 1 0; min-width: 0; }
+  .buy > * { flex: 1 1 100%; }
+}

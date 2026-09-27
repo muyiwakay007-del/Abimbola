@@ -13,7 +13,23 @@ const messages: Record<string, string> = {
   invalid_email: "Please enter a valid email address.",
   name_required: "Please tell me your name.",
   message_too_short: "Please write a little more in your message.",
+  too_many: "You've sent several messages already. Please try again in an hour.",
 };
+
+/**
+ * Bluehost challenges requests to PHP files with a 409 page whose script sets a
+ * cookie and reloads. A fetch never runs that script, so do what it asks
+ * (set the cookie) and retry once.
+ */
+async function post(endpoint: string, data: Record<string, string>) {
+  const send = () => fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+  const res = await send();
+  if (res.status !== 409) return res;
+  const cookie = (await res.clone().text()).match(/document\.cookie\s*=\s*"([^"]+)"/)?.[1];
+  if (!cookie) return res;
+  document.cookie = `${cookie}; path=/`;
+  return send();
+}
 
 /** Posts JSON to an API route and tracks honest status messages. */
 export function useFormSubmit(endpoint: string) {
@@ -22,7 +38,7 @@ export function useFormSubmit(endpoint: string) {
   async function submit(data: Record<string, string>) {
     setStatus({ state: "submitting" });
     try {
-      const res = await fetch(endpoint, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(data) });
+      const res = await post(endpoint, data);
       // Only a JSON { ok: true } from a form handler counts as sent. On static hosting
       // there is no handler, and Bluehost answers POSTs with the 404 page and a 200 status.
       const body = await res.json().catch(() => null);

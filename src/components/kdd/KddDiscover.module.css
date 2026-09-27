@@ -152,3 +152,10 @@
   .parts li { font-size: 0.9rem; }
   .partIcon { width: 28px; height: 28px; }
 }
+
+@media (max-width: 560px) {
+  .stage { width: 92%; margin-bottom: 1rem; }
+  .chip { bottom: -14px; padding: 0.3rem 0.7rem; font-size: 0.7rem; letter-spacing: 0.03em; }
+  .chipTeal { left: 0; }
+  .chipPlum { right: 0; }
+}

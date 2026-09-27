@@ -100,6 +100,7 @@
   font-weight: 700;
   color: var(--vol);
 }
+.volTag { white-space: nowrap; }
 .of { font-family: var(--font-sans); font-size: var(--text-sm); font-weight: 700; color: var(--text-muted); }
 .role {
   display: inline-flex;
@@ -153,7 +154,7 @@
 .note a { font-weight: 700; text-decoration: underline; text-underline-offset: 3px; }
 
 @media (max-width: 560px) {
-  .cardTop { padding: var(--space-4) var(--space-4) 0; }
+  .cardTop { flex-wrap: wrap; padding: var(--space-4) var(--space-4) 0; }
   .cover { padding: var(--space-4) var(--space-6) var(--space-5); }
   .body { padding: 0 var(--space-4) var(--space-5); }
   .volTag { font-size: 1.2rem; }
