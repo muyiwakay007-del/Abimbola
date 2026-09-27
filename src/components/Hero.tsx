@@ -37,7 +37,7 @@ export function Hero() {
             <p>
               I&apos;m <strong className={styles.name}>Abimbola Olumuyiwa</strong>
               <span>
-                Mum, writer and author of <Link href="/books/kiddies-daily-devotional">Kiddies Daily Devotional</Link>
+                Wife, mum, author, songwriter
               </span>
             </p>
           </div>
