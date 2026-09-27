@@ -45,8 +45,8 @@ export const author: Author = {
 
   social: {
     youtube: "https://www.youtube.com/channel/UCAEM9w3lYVw2MSkUip-QGAg",
-    linkedin: "https://www.linkedin.com/in/abimbolaolumuyiwa/",
-    instagram: null,
+    linkedin: null,
+    instagram: "https://www.instagram.com/abimibolao/",
     facebook: null,
     tiktok: null,
     x: null,
