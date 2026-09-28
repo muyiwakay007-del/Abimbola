@@ -36,9 +36,6 @@ export function Hero() {
             )}
             <p>
               <strong className={styles.name}>Abimbola Olumuyiwa</strong>
-              <span>
-                Wife, mum, author, songwriter.
-              </span>
             </p>
           </div>
           <div className={styles.actions}>
