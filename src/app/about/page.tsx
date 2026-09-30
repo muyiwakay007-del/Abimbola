@@ -16,7 +16,7 @@ export default function AboutPage() {
   return (
     <>
       <JsonLd data={[personSchema(), breadcrumbSchema([{ name: "Home", path: "/" }, { name: "About", path: "/about" }])]} />
-      <PageHeader eyebrow="About" title={<>Hi, I&apos;m <span style={{ fontFamily: "var(--font-script)", color: "var(--accent)" }}>Abimbola</span></>} intro={author.tagline} />
+      <PageHeader eyebrow="About" title={<>Hi, I&apos;m <span style={{ fontFamily: "var(--font-script)", color: "var(--accent)" }}>Abimbola</span></>} />
 
       <section className="section">
         <div className={`container ${styles.grid}`}>
