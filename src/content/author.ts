@@ -25,7 +25,7 @@ export const author: Author = {
 
   /** About page → "My story". One string per paragraph, shown exactly as written. */
   myStory: [
-    "I'm a wife, mum, finance professional, author & psalmist. I'm on a mission to help more and more young people find their purpose in Christ and live that purpose out fully. My latest work is the Kiddies Daily Devotional collection which I originally wrote because I wanted my own children to have a structured guide for their faith journey, shaping their worldview and mindset from an early age.",
+    "I'm a wife, mum, finance professional, author & psalmist. I'm on a mission to help more and more young people discover their purpose and live it out fully. My latest work is the Kiddies Daily Devotional collection which I originally wrote because I wanted my own children to have a structured guide for their faith journey, shaping their worldview and mindset from an early age.",
     "This little corner of the internet is a place to breathe. I write about faith, personal growth, and the books that shape me: slowly, honestly, and with a lot of hope.",
     "Whether you're just evolving or you're someone who has a desire to impact lives in the most positive way, I'm so glad you stopped by.",
   ],
