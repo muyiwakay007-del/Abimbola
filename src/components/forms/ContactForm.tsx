@@ -37,7 +37,7 @@ export function ContactForm() {
     return (
       <div className={styles.successCard} role="status">
         <h2 className={styles.successTitle}>Thank you for reaching out!</h2>
-        <p>Your message has been sent. I&apos;ll get back to you as soon as I can.</p>
+        <p>Your message has been sent. We&apos;ll get back to you as soon as we can.</p>
       </div>
     );
   }
