@@ -6,7 +6,8 @@
 const TO = 'contact@abimbolaolumuyiwa.com';
 const FROM = 'Abimbola Olumuyiwa website <noreply@abimbolaolumuyiwa.com>';
 // Envelope sender on our own domain, so the SPF pass counts for abimbolaolumuyiwa.com.
-const ENVELOPE_FROM = 'noreply@abimbolaolumuyiwa.com';
+// It is a real mailbox so bounce notices from rejected sends land in the inbox.
+const ENVELOPE_FROM = 'contact@abimbolaolumuyiwa.com';
 // Keep in sync with contactTopics in src/content/site.ts.
 const TOPICS = ['General', 'Book order or bulk purchase', 'School or church', 'Speaking or event', 'Review', 'Media'];
 const MAX_PER_HOUR = 5;
