@@ -4,7 +4,7 @@
 // It returns the same JSON shape that useFormSubmit expects.
 
 const TO = 'contact@abimbolaolumuyiwa.com';
-const FROM = 'Abimbola Olumuyiwa website <contact@abimbolaolumuyiwa.com>';
+const FROM = 'Abimbola Olumuyiwa website <noreply@abimbolaolumuyiwa.com>';
 // Envelope sender on our own domain, so the SPF pass counts for abimbolaolumuyiwa.com.
 // It is a real mailbox so bounce notices from rejected sends land in the inbox.
 const ENVELOPE_FROM = 'contact@abimbolaolumuyiwa.com';
