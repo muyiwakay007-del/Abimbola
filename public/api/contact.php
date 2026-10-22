@@ -11,6 +11,10 @@ const ENVELOPE_FROM = 'contact@abimbolaolumuyiwa.com';
 // Keep in sync with contactTopics in src/content/site.ts.
 const TOPICS = ['General', 'Book order or bulk purchase', 'School or church', 'Speaking or event', 'Review', 'Media'];
 const MAX_PER_HOUR = 5;
+// Titan SMTP settings live outside public_html so the password is never web-served
+// or committed. The file returns ['host' => ..., 'port' => 465, 'username' => ..., 'password' => ...].
+// Without it, the form falls back to PHP mail().
+const SMTP_CONFIG = __DIR__ . '/../../contact-smtp.php';
 
 header('Content-Type: application/json; charset=utf-8');
 header('Cache-Control: no-store');
@@ -30,13 +34,50 @@ function oneLine(string $value): string {
   return trim(preg_replace('/[\r\n]+/', ' ', $value));
 }
 
+// Sends one message through an authenticated SMTP server over implicit TLS.
+// Returns null on success, or the server reply that failed.
+function smtpSend(array $cfg, string $from, string $to, string $data): ?string {
+  $fp = @stream_socket_client('ssl://' . $cfg['host'] . ':' . ($cfg['port'] ?? 465), $errno, $errstr, 15);
+  if (!$fp) return "connect: $errno $errstr";
+  stream_set_timeout($fp, 15);
+  $read = function () use ($fp): string {
+    $out = '';
+    while (($line = fgets($fp, 1024)) !== false) {
+      $out .= $line;
+      if (strlen($line) < 4 || $line[3] === ' ') break;
+    }
+    return $out;
+  };
+  $step = function (?string $cmd, string $expect) use ($fp, $read): ?string {
+    if ($cmd !== null) fwrite($fp, $cmd . "\r\n");
+    $reply = $read();
+    return strncmp($reply, $expect, 3) === 0 ? null : trim($reply);
+  };
+  // Lines starting with a dot are doubled so they can't end the message early.
+  $data = preg_replace('/^\./m', '..', str_replace(["\r\n", "\r"], "\n", $data));
+  $data = str_replace("\n", "\r\n", $data);
+  $error = $step(null, '220')
+    ?? $step('EHLO abimbolaolumuyiwa.com', '250')
+    ?? $step('AUTH LOGIN', '334')
+    ?? $step(base64_encode($cfg['username']), '334')
+    ?? $step(base64_encode($cfg['password']), '235')
+    ?? $step("MAIL FROM:<$from>", '250')
+    ?? $step("RCPT TO:<$to>", '250')
+    ?? $step('DATA', '354')
+    ?? $step($data . "\r\n.", '250');
+  fwrite($fp, "QUIT\r\n");
+  fclose($fp);
+  return $error;
+}
+
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') reply(405, ['error' => 'invalid_request']);
 
 $body = json_decode(file_get_contents('php://input'), true);
 if (!is_array($body)) reply(400, ['error' => 'invalid_request']);
 
-// Honeypot: real visitors never fill the hidden "company" field.
-if (clean($body['company'] ?? '') !== '') reply(200, ['ok' => true]);
+// Honeypot: real visitors never fill the hidden field. It is not called "company"
+// because browser autofill fills fields with that name, silently dropping real messages.
+if (clean($body['hp_extra'] ?? '') !== '') reply(200, ['ok' => true]);
 
 $name = oneLine(clean($body['name'] ?? '', 100));
 $email = oneLine(clean($body['email'] ?? '', 254));
@@ -64,7 +105,21 @@ $headers = implode("\r\n", [
   'Content-Transfer-Encoding: 8bit',
 ]);
 
-if (!mail(TO, $subject, $text, $headers, '-f' . ENVELOPE_FROM)) {
+$smtp = is_readable(SMTP_CONFIG) ? require SMTP_CONFIG : null;
+if (is_array($smtp)) {
+  $message = implode("\r\n", [
+    'Date: ' . date('r'),
+    'Message-ID: <' . bin2hex(random_bytes(12)) . '@abimbolaolumuyiwa.com>',
+    'To: ' . TO,
+    "Subject: $subject",
+    $headers,
+  ]) . "\r\n\r\n" . $text;
+  $error = smtpSend($smtp, ENVELOPE_FROM, TO, $message);
+  if ($error !== null) {
+    error_log("[contact] SMTP failed: $error");
+    reply(502, ['error' => 'provider_error']);
+  }
+} elseif (!mail(TO, $subject, $text, $headers, '-f' . ENVELOPE_FROM)) {
   error_log('[contact] mail() failed');
   reply(502, ['error' => 'provider_error']);
 }

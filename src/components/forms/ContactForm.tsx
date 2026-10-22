@@ -82,7 +82,7 @@ export function ContactForm() {
       {field("message", "Message", <textarea rows={6} className={styles.inputLight} {...a11y("message")} />)}
       <div className={styles.hp} aria-hidden="true">
         <label>
-          Company <input name="company" tabIndex={-1} autoComplete="off" />
+          Leave this field empty <input name="hp_extra" tabIndex={-1} autoComplete="off" />
         </label>
       </div>
       <button type="submit" className={styles.submit} disabled={status.state === "submitting"}>
